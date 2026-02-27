@@ -1,3 +1,59 @@
+// ===== 3D INTRO LOGO (INDEX PAGE ONLY) =====
+
+if (window.location.pathname.includes("index") || window.location.pathname === "/") {
+
+    const introScene = new THREE.Scene();
+    const introCamera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const introRenderer = new THREE.WebGLRenderer({ alpha: true });
+    introRenderer.setSize(window.innerWidth, window.innerHeight);
+    document.getElementById("intro-screen").appendChild(introRenderer.domElement);
+
+    introCamera.position.z = 5;
+
+    const light = new THREE.PointLight(0x00f5ff, 2);
+    light.position.set(5, 5, 5);
+    introScene.add(light);
+
+    const loader = new THREE.FontLoader();
+    loader.load('https://threejs.org/examples/fonts/helvetiker_regular.typeface.json', function (font) {
+
+        const geometry = new THREE.TextGeometry("HKB", {
+            font: font,
+            size: 1.5,
+            height: 0.3,
+        });
+
+        const material = new THREE.MeshStandardMaterial({
+            color: 0x00f5ff,
+            metalness: 0.8,
+            roughness: 0.2,
+        });
+
+        const textMesh = new THREE.Mesh(geometry, material);
+        geometry.center();
+        introScene.add(textMesh);
+
+        let time = 0;
+
+        function animateIntro() {
+            requestAnimationFrame(animateIntro);
+            time += 0.01;
+
+            textMesh.rotation.y += 0.02;
+            textMesh.rotation.x = Math.sin(time) * 0.3;
+
+            introCamera.position.z -= 0.01;
+
+            introRenderer.render(introScene, introCamera);
+
+            if (introCamera.position.z < 1) {
+                document.getElementById("intro-screen").style.display = "none";
+            }
+        }
+
+        animateIntro();
+    });
+}
 // ===== GLOBAL 3D BACKGROUND FOR ALL PAGES =====
 
 window.addEventListener("load", function () {
