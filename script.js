@@ -61,3 +61,9 @@ window.addEventListener("resize", () => {
     camera.updateProjectionMatrix();
     renderer.setSize(window.innerWidth, window.innerHeight);
 });
+// Intro animation remove
+window.addEventListener("load", () => {
+    setTimeout(() => {
+        document.getElementById("intro").style.display = "none";
+    }, 3000);
+});
