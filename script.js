@@ -1,9 +1,10 @@
-// ===== 3D INTRO (WORKING VERSION) =====
+// ===== CLEAN INTRO FIX =====
 
 window.addEventListener("load", function () {
 
-    // INTRO ONLY ON INDEX
     if (window.location.pathname.includes("index") || window.location.pathname === "/") {
+
+        const introScreen = document.getElementById("intro-screen");
 
         const introScene = new THREE.Scene();
         const introCamera = new THREE.PerspectiveCamera(
@@ -15,7 +16,7 @@ window.addEventListener("load", function () {
 
         const introRenderer = new THREE.WebGLRenderer({ alpha: true });
         introRenderer.setSize(window.innerWidth, window.innerHeight);
-        document.getElementById("intro-screen").appendChild(introRenderer.domElement);
+        introScreen.appendChild(introRenderer.domElement);
 
         introCamera.position.z = 5;
 
@@ -23,47 +24,39 @@ window.addEventListener("load", function () {
         light.position.set(5, 5, 5);
         introScene.add(light);
 
-        // Create 3D HKB using boxes
         const material = new THREE.MeshStandardMaterial({
             color: 0x00f5ff,
             metalness: 0.8,
             roughness: 0.2
         });
 
-        const group = new THREE.Group();
+        const geometry = new THREE.BoxGeometry(2, 2, 0.5);
+        const cube = new THREE.Mesh(geometry, material);
+        introScene.add(cube);
 
-        function createLetter(xOffset) {
-            const geometry = new THREE.BoxGeometry(0.6, 2, 0.4);
-            const mesh = new THREE.Mesh(geometry, material);
-            mesh.position.x = xOffset;
-            return mesh;
-        }
-
-        group.add(createLetter(-2));
-        group.add(createLetter(0));
-        group.add(createLetter(2));
-
-        introScene.add(group);
-
-        let zoomSpeed = 0.02;
+        let progress = 0;
 
         function animateIntro() {
             requestAnimationFrame(animateIntro);
 
-            group.rotation.y += 0.03;
-            group.rotation.x += 0.01;
+            progress += 0.02;
 
-            introCamera.position.z -= zoomSpeed;
+            cube.rotation.x += 0.03;
+            cube.rotation.y += 0.03;
+
+            introCamera.position.z -= 0.02;
 
             introRenderer.render(introScene, introCamera);
 
-            if (introCamera.position.z < 1) {
-                document.getElementById("intro-screen").style.display = "none";
+            if (progress > 3) {
+                introScreen.remove();   // 🔥 THIS FIXES BLACK SCREEN
             }
         }
 
         animateIntro();
     }
+
+});
 
     // ===== MAIN 3D BACKGROUND FOR ALL PAGES =====
 
