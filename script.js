@@ -1,88 +1,63 @@
-// ===== NETWORK ANIMATION WITH CONNECTION LINES =====
-const canvas = document.getElementById("network");
-const ctx = canvas.getContext("2d");
+// ===== 3D PARTICLE BACKGROUND =====
 
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+let scene = new THREE.Scene();
+let camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+let renderer = new THREE.WebGLRenderer({ alpha: true });
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setPixelRatio(window.devicePixelRatio);
+document.body.appendChild(renderer.domElement);
 
-let particles = [];
+renderer.domElement.style.position = "fixed";
+renderer.domElement.style.top = "0";
+renderer.domElement.style.left = "0";
+renderer.domElement.style.zIndex = "-1";
 
-for (let i = 0; i < 70; i++) {
-    particles.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        vx: Math.random() * 0.6 - 0.3,
-        vy: Math.random() * 0.6 - 0.3
-    });
+camera.position.z = 5;
+
+let geometry = new THREE.BufferGeometry();
+let vertices = [];
+
+for (let i = 0; i < 1500; i++) {
+    vertices.push(
+        (Math.random() - 0.5) * 20,
+        (Math.random() - 0.5) * 20,
+        (Math.random() - 0.5) * 20
+    );
 }
 
-function animateNetwork() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
 
-    particles.forEach(p => {
-        p.x += p.vx;
-        p.y += p.vy;
+let material = new THREE.PointsMaterial({
+    color: 0x00f5ff,
+    size: 0.05
+});
 
-        if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
-        if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+let particles = new THREE.Points(geometry, material);
+scene.add(particles);
 
-        ctx.fillStyle = "#00f5ff";
-        ctx.fillRect(p.x, p.y, 2, 2);
-    });
-
-    for (let i = 0; i < particles.length; i++) {
-        for (let j = i; j < particles.length; j++) {
-            let dx = particles[i].x - particles[j].x;
-            let dy = particles[i].y - particles[j].y;
-            let distance = Math.sqrt(dx * dx + dy * dy);
-
-            if (distance < 120) {
-                ctx.strokeStyle = "rgba(0,245,255,0.1)";
-                ctx.lineWidth = 1;
-                ctx.beginPath();
-                ctx.moveTo(particles[i].x, particles[i].y);
-                ctx.lineTo(particles[j].x, particles[j].y);
-                ctx.stroke();
-            }
-        }
-    }
-
-    requestAnimationFrame(animateNetwork);
+function animate() {
+    requestAnimationFrame(animate);
+    particles.rotation.x += 0.0005;
+    particles.rotation.y += 0.001;
+    renderer.render(scene, camera);
 }
-animateNetwork();
 
+animate();
 
-// ===== TYPING EFFECT =====
-const text = "We Engineer Intelligent AI Automation Systems";
-let i = 0;
-function typing() {
-    if (i < text.length) {
-        document.getElementById("typing").innerHTML += text.charAt(i);
-        i++;
-        setTimeout(typing, 40);
-    }
-}
-typing();
+// ===== Mouse Interaction =====
 
+document.addEventListener("mousemove", (event) => {
+    let mouseX = (event.clientX / window.innerWidth - 0.5) * 2;
+    let mouseY = (event.clientY / window.innerHeight - 0.5) * 2;
 
-// ===== COUNTER ANIMATION =====
-const counters = document.querySelectorAll(".counter");
-const speed = 200;
+    particles.rotation.x = mouseY * 0.5;
+    particles.rotation.y = mouseX * 0.5;
+});
 
-counters.forEach(counter => {
-    const updateCount = () => {
-        const target = +counter.getAttribute("data-target");
-        const count = +counter.innerText;
+// ===== Responsive =====
 
-        const inc = target / speed;
-
-        if (count < target) {
-            counter.innerText = Math.ceil(count + inc);
-            setTimeout(updateCount, 20);
-        } else {
-            counter.innerText = target;
-        }
-    };
-
-    updateCount();
+window.addEventListener("resize", () => {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
 });
