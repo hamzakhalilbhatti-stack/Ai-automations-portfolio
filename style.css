@@ -64,7 +64,10 @@ nav a:hover {
     text-align: center;
     padding: 0 20px;
 }
-
+.hero {
+    position: relative;
+    z-index: 2;
+}
 .hero h1 {
     font-size: 60px;
     background: linear-gradient(90deg,#00f5ff,#7a5cff);
