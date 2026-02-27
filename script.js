@@ -1,48 +1,59 @@
-// ===== 3D INTRO LOGO (INDEX PAGE ONLY) =====
+// ===== 3D INTRO (WORKING VERSION) =====
 
-if (window.location.pathname.includes("index") || window.location.pathname === "/") {
+window.addEventListener("load", function () {
 
-    const introScene = new THREE.Scene();
-    const introCamera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    const introRenderer = new THREE.WebGLRenderer({ alpha: true });
-    introRenderer.setSize(window.innerWidth, window.innerHeight);
-    document.getElementById("intro-screen").appendChild(introRenderer.domElement);
+    // INTRO ONLY ON INDEX
+    if (window.location.pathname.includes("index") || window.location.pathname === "/") {
 
-    introCamera.position.z = 5;
+        const introScene = new THREE.Scene();
+        const introCamera = new THREE.PerspectiveCamera(
+            75,
+            window.innerWidth / window.innerHeight,
+            0.1,
+            1000
+        );
 
-    const light = new THREE.PointLight(0x00f5ff, 2);
-    light.position.set(5, 5, 5);
-    introScene.add(light);
+        const introRenderer = new THREE.WebGLRenderer({ alpha: true });
+        introRenderer.setSize(window.innerWidth, window.innerHeight);
+        document.getElementById("intro-screen").appendChild(introRenderer.domElement);
 
-    const loader = new THREE.FontLoader();
-    loader.load('https://threejs.org/examples/fonts/helvetiker_regular.typeface.json', function (font) {
+        introCamera.position.z = 5;
 
-        const geometry = new THREE.TextGeometry("HKB", {
-            font: font,
-            size: 1.5,
-            height: 0.3,
-        });
+        const light = new THREE.PointLight(0x00f5ff, 2);
+        light.position.set(5, 5, 5);
+        introScene.add(light);
 
+        // Create 3D HKB using boxes
         const material = new THREE.MeshStandardMaterial({
             color: 0x00f5ff,
             metalness: 0.8,
-            roughness: 0.2,
+            roughness: 0.2
         });
 
-        const textMesh = new THREE.Mesh(geometry, material);
-        geometry.center();
-        introScene.add(textMesh);
+        const group = new THREE.Group();
 
-        let time = 0;
+        function createLetter(xOffset) {
+            const geometry = new THREE.BoxGeometry(0.6, 2, 0.4);
+            const mesh = new THREE.Mesh(geometry, material);
+            mesh.position.x = xOffset;
+            return mesh;
+        }
+
+        group.add(createLetter(-2));
+        group.add(createLetter(0));
+        group.add(createLetter(2));
+
+        introScene.add(group);
+
+        let zoomSpeed = 0.02;
 
         function animateIntro() {
             requestAnimationFrame(animateIntro);
-            time += 0.01;
 
-            textMesh.rotation.y += 0.02;
-            textMesh.rotation.x = Math.sin(time) * 0.3;
+            group.rotation.y += 0.03;
+            group.rotation.x += 0.01;
 
-            introCamera.position.z -= 0.01;
+            introCamera.position.z -= zoomSpeed;
 
             introRenderer.render(introScene, introCamera);
 
@@ -52,11 +63,9 @@ if (window.location.pathname.includes("index") || window.location.pathname === "
         }
 
         animateIntro();
-    });
-}
-// ===== GLOBAL 3D BACKGROUND FOR ALL PAGES =====
+    }
 
-window.addEventListener("load", function () {
+    // ===== MAIN 3D BACKGROUND FOR ALL PAGES =====
 
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(
@@ -95,12 +104,12 @@ window.addEventListener("load", function () {
         new THREE.Float32BufferAttribute(vertices, 3)
     );
 
-    const material = new THREE.PointsMaterial({
+    const materialParticles = new THREE.PointsMaterial({
         color: 0x00f5ff,
         size: 0.05
     });
 
-    const particles = new THREE.Points(geometry, material);
+    const particles = new THREE.Points(geometry, materialParticles);
     scene.add(particles);
 
     function animate() {
@@ -111,21 +120,5 @@ window.addEventListener("load", function () {
     }
 
     animate();
-
-    // Mouse interaction
-    document.addEventListener("mousemove", function (event) {
-        const mouseX = (event.clientX / window.innerWidth - 0.5) * 2;
-        const mouseY = (event.clientY / window.innerHeight - 0.5) * 2;
-
-        particles.rotation.x = mouseY * 0.5;
-        particles.rotation.y = mouseX * 0.5;
-    });
-
-    // Responsive
-    window.addEventListener("resize", function () {
-        camera.aspect = window.innerWidth / window.innerHeight;
-        camera.updateProjectionMatrix();
-        renderer.setSize(window.innerWidth, window.innerHeight);
-    });
 
 });
