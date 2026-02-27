@@ -135,3 +135,21 @@ footer {
     text-align: center;
     background: rgba(255,255,255,0.05);
 }
+
+.linkedin-float {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: #0077b5;
+    padding: 15px 18px;
+    border-radius: 50%;
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+    box-shadow: 0 0 20px #0077b5;
+    transition: 0.3s;
+}
+
+.linkedin-float:hover {
+    transform: scale(1.1);
+}
