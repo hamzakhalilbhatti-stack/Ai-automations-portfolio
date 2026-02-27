@@ -178,3 +178,17 @@ footer {
         visibility: hidden;
     }
 }
+@media (max-width: 768px) {
+    nav {
+        padding: 20px;
+        flex-direction: column;
+    }
+
+    .hero h1 {
+        font-size: 36px;
+    }
+
+    section {
+        padding: 80px 20px;
+    }
+}
