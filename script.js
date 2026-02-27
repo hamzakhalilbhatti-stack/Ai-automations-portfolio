@@ -1,21 +1,35 @@
-// Simple Scroll Reveal Animation
-const revealElements = document.querySelectorAll(".card");
+const canvas = document.getElementById("network");
+const ctx = canvas.getContext("2d");
 
-window.addEventListener("scroll", () => {
-    revealElements.forEach(el => {
-        const windowHeight = window.innerHeight;
-        const elementTop = el.getBoundingClientRect().top;
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
 
-        if (elementTop < windowHeight - 100) {
-            el.style.opacity = "1";
-            el.style.transform = "translateY(0)";
-        }
+let particles = [];
+
+for (let i = 0; i < 80; i++) {
+    particles.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        vx: Math.random() * 1 - 0.5,
+        vy: Math.random() * 1 - 0.5
     });
-});
+}
 
-// Initial state
-revealElements.forEach(el => {
-    el.style.opacity = "0";
-    el.style.transform = "translateY(50px)";
-    el.style.transition = "all 0.8s ease";
-});
+function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    particles.forEach(p => {
+        p.x += p.vx;
+        p.y += p.vy;
+
+        if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+        if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+
+        ctx.fillStyle = "#00f5ff";
+        ctx.fillRect(p.x, p.y, 2, 2);
+    });
+
+    requestAnimationFrame(animate);
+}
+
+animate();
