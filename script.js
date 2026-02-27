@@ -1,64 +1,69 @@
-// ===== CLEAN INTRO FIX =====
-
 window.addEventListener("load", function () {
+
+    /* ===============================
+       3D INTRO (INDEX ONLY)
+    =============================== */
 
     if (window.location.pathname.includes("index") || window.location.pathname === "/") {
 
         const introScreen = document.getElementById("intro-screen");
 
-        const introScene = new THREE.Scene();
-        const introCamera = new THREE.PerspectiveCamera(
-            75,
-            window.innerWidth / window.innerHeight,
-            0.1,
-            1000
-        );
+        if (introScreen) {
 
-        const introRenderer = new THREE.WebGLRenderer({ alpha: true });
-        introRenderer.setSize(window.innerWidth, window.innerHeight);
-        introScreen.appendChild(introRenderer.domElement);
+            const introScene = new THREE.Scene();
+            const introCamera = new THREE.PerspectiveCamera(
+                75,
+                window.innerWidth / window.innerHeight,
+                0.1,
+                1000
+            );
 
-        introCamera.position.z = 5;
+            const introRenderer = new THREE.WebGLRenderer({ alpha: true });
+            introRenderer.setSize(window.innerWidth, window.innerHeight);
+            introScreen.appendChild(introRenderer.domElement);
 
-        const light = new THREE.PointLight(0x00f5ff, 2);
-        light.position.set(5, 5, 5);
-        introScene.add(light);
+            introCamera.position.z = 5;
 
-        const material = new THREE.MeshStandardMaterial({
-            color: 0x00f5ff,
-            metalness: 0.8,
-            roughness: 0.2
-        });
+            const light = new THREE.PointLight(0x00f5ff, 2);
+            light.position.set(5, 5, 5);
+            introScene.add(light);
 
-        const geometry = new THREE.BoxGeometry(2, 2, 0.5);
-        const cube = new THREE.Mesh(geometry, material);
-        introScene.add(cube);
+            const material = new THREE.MeshStandardMaterial({
+                color: 0x00f5ff,
+                metalness: 0.8,
+                roughness: 0.2
+            });
 
-        let progress = 0;
+            const geometry = new THREE.BoxGeometry(2, 2, 0.5);
+            const cube = new THREE.Mesh(geometry, material);
+            introScene.add(cube);
 
-        function animateIntro() {
-            requestAnimationFrame(animateIntro);
+            let frame = 0;
 
-            progress += 0.02;
+            function animateIntro() {
+                requestAnimationFrame(animateIntro);
 
-            cube.rotation.x += 0.03;
-            cube.rotation.y += 0.03;
+                frame++;
 
-            introCamera.position.z -= 0.02;
+                cube.rotation.x += 0.03;
+                cube.rotation.y += 0.03;
 
-            introRenderer.render(introScene, introCamera);
+                introCamera.position.z -= 0.03;
 
-            if (progress > 3) {
-                introScreen.remove();   // 🔥 THIS FIXES BLACK SCREEN
+                introRenderer.render(introScene, introCamera);
+
+                if (frame > 120) {
+                    introScreen.remove();
+                }
             }
-        }
 
-        animateIntro();
+            animateIntro();
+        }
     }
 
-});
-
-    // ===== MAIN 3D BACKGROUND FOR ALL PAGES =====
+    /* ===============================
+       MAIN 3D PARTICLE BACKGROUND
+    =============================== */
 
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(
@@ -81,7 +86,7 @@ window.addEventListener("load", function () {
 
     camera.position.z = 5;
 
-    const geometry = new THREE.BufferGeometry();
+    const geometryParticles = new THREE.BufferGeometry();
     const vertices = [];
 
     for (let i = 0; i < 2000; i++) {
@@ -92,7 +97,7 @@ window.addEventListener("load", function () {
         );
     }
 
-    geometry.setAttribute(
+    geometryParticles.setAttribute(
         "position",
         new THREE.Float32BufferAttribute(vertices, 3)
     );
@@ -102,16 +107,16 @@ window.addEventListener("load", function () {
         size: 0.05
     });
 
-    const particles = new THREE.Points(geometry, materialParticles);
+    const particles = new THREE.Points(geometryParticles, materialParticles);
     scene.add(particles);
 
-    function animate() {
-        requestAnimationFrame(animate);
+    function animateBackground() {
+        requestAnimationFrame(animateBackground);
         particles.rotation.x += 0.0005;
         particles.rotation.y += 0.001;
         renderer.render(scene, camera);
     }
 
-    animate();
+    animateBackground();
 
 });
