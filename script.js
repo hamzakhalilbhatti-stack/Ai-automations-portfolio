@@ -1,8 +1,8 @@
 window.addEventListener("load", function () {
 
-/* =============================
-   LUXURY FUTURISTIC INTRO
-============================= */
+/* =====================================
+   LUXURY HKB CINEMATIC INTRO + BURST
+===================================== */
 
 const introContainer = document.getElementById("intro-container");
 const canvas = document.getElementById("intro-canvas");
@@ -12,7 +12,7 @@ if (introContainer && canvas) {
     const scene = new THREE.Scene();
 
     const camera = new THREE.PerspectiveCamera(
-        55,
+        60,
         window.innerWidth / window.innerHeight,
         0.1,
         1000
@@ -27,13 +27,16 @@ if (introContainer && canvas) {
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio(window.devicePixelRatio);
 
-    camera.position.z = 8;
+    camera.position.z = 10;
 
-    // Premium lighting
+    // Luxury Background
+    scene.background = new THREE.Color("#0a0f1f");
+
+    // Premium Lighting
     const ambient = new THREE.AmbientLight(0xffffff, 0.6);
     scene.add(ambient);
 
-    const goldLight = new THREE.PointLight(0xd4af37, 2.5);
+    const goldLight = new THREE.PointLight(0xd4af37, 3);
     goldLight.position.set(5, 5, 5);
     scene.add(goldLight);
 
@@ -44,11 +47,11 @@ if (introContainer && canvas) {
     const loader = new THREE.FontLoader();
 
     loader.load(
-        "https://threejs.org/examples/fonts/helvetiker_regular.typeface.json",
+        "https://threejs.org/examples/fonts/helvetiker_bold.typeface.json",
         function (font) {
 
-            const geometry = new THREE.TextGeometry(
-                "WELCOME",
+            const mainGeo = new THREE.TextGeometry(
+                "HKB AUTOMATIONS",
                 {
                     font: font,
                     size: 0.8,
@@ -57,45 +60,107 @@ if (introContainer && canvas) {
                 }
             );
 
-            geometry.center();
+            mainGeo.center();
 
-            const material = new THREE.MeshPhysicalMaterial({
+            const mainMat = new THREE.MeshPhysicalMaterial({
                 color: 0xffffff,
                 metalness: 1,
-                roughness: 0.15,
-                clearcoat: 1,
-                clearcoatRoughness: 0
+                roughness: 0.1,
+                clearcoat: 1
             });
 
-            const textMesh = new THREE.Mesh(geometry, material);
-            scene.add(textMesh);
+            const mainText = new THREE.Mesh(mainGeo, mainMat);
+            scene.add(mainText);
+
+            const subGeo = new THREE.TextGeometry(
+                "Engineering Intelligent Futures",
+                {
+                    font: font,
+                    size: 0.25,
+                    height: 0.1,
+                }
+            );
+
+            subGeo.center();
+
+            const subText = new THREE.Mesh(subGeo, mainMat);
+            subText.position.y = -1.2;
+            scene.add(subText);
+
+            // ==========================
+            // GOLD PARTICLE BURST SETUP
+            // ==========================
+
+            const burstGeometry = new THREE.BufferGeometry();
+            const burstCount = 1500;
+            const positions = [];
+            const velocities = [];
+
+            for (let i = 0; i < burstCount; i++) {
+                positions.push(0, 0, 0);
+                velocities.push(
+                    (Math.random() - 0.5) * 0.4,
+                    (Math.random() - 0.5) * 0.4,
+                    (Math.random() - 0.5) * 0.4
+                );
+            }
+
+            burstGeometry.setAttribute(
+                "position",
+                new THREE.Float32BufferAttribute(positions, 3)
+            );
+
+            const burstMaterial = new THREE.PointsMaterial({
+                color: 0xd4af37,
+                size: 0.05
+            });
+
+            const burst = new THREE.Points(burstGeometry, burstMaterial);
+            scene.add(burst);
 
             let frame = 0;
+            let burstStarted = false;
 
             function animateIntro() {
                 requestAnimationFrame(animateIntro);
-
                 frame++;
 
-                // Slow luxury float
-                textMesh.position.y = Math.sin(frame * 0.02) * 0.3;
+                // Floating luxury movement
+                mainText.position.y = Math.sin(frame * 0.02) * 0.2;
+                mainText.rotation.y += 0.003;
 
-                // Very smooth rotation
-                textMesh.rotation.y += 0.003;
+                subText.position.y = -1.2 + Math.sin(frame * 0.02) * 0.2;
 
-                // Cinematic zoom in
-                if (camera.position.z > 5) {
-                    camera.position.z -= 0.01;
+                // Trigger Burst
+                if (frame > 300 && !burstStarted) {
+                    burstStarted = true;
+                }
+
+                if (burstStarted) {
+                    const posArray = burst.geometry.attributes.position.array;
+
+                    for (let i = 0; i < burstCount; i++) {
+                        posArray[i * 3] += velocities[i * 3];
+                        posArray[i * 3 + 1] += velocities[i * 3 + 1];
+                        posArray[i * 3 + 2] += velocities[i * 3 + 2];
+                    }
+
+                    burst.geometry.attributes.position.needsUpdate = true;
+
+                    mainText.material.opacity = Math.max(0, 1 - (frame - 300) / 100);
+                    subText.material.opacity = Math.max(0, 1 - (frame - 300) / 100);
+                    mainText.material.transparent = true;
+                    subText.material.transparent = true;
                 }
 
                 renderer.render(scene, camera);
 
-                // Fade out
-                if (frame > 450) {
+                // Exit to website
+                if (frame > 420) {
                     introContainer.style.opacity = "0";
                     setTimeout(() => {
                         introContainer.remove();
-                    }, 1200);
+                    }, 1000);
                 }
             }
 
