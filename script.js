@@ -1,7 +1,7 @@
 window.addEventListener("load", function () {
 
- /* =============================
-   PREMIUM 3D FLOATING INTRO
+/* =============================
+   LUXURY FUTURISTIC INTRO
 ============================= */
 
 const introContainer = document.getElementById("intro-container");
@@ -12,7 +12,7 @@ if (introContainer && canvas) {
     const scene = new THREE.Scene();
 
     const camera = new THREE.PerspectiveCamera(
-        60,
+        55,
         window.innerWidth / window.innerHeight,
         0.1,
         1000
@@ -27,21 +27,19 @@ if (introContainer && canvas) {
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio(window.devicePixelRatio);
 
-    camera.position.z = 6;
+    camera.position.z = 8;
 
-    // Soft ambient light
+    // Premium lighting
     const ambient = new THREE.AmbientLight(0xffffff, 0.6);
     scene.add(ambient);
 
-    // Cyan light
-    const cyanLight = new THREE.PointLight(0x00f5ff, 2);
-    cyanLight.position.set(5, 5, 5);
-    scene.add(cyanLight);
+    const goldLight = new THREE.PointLight(0xd4af37, 2.5);
+    goldLight.position.set(5, 5, 5);
+    scene.add(goldLight);
 
-    // Purple light
-    const purpleLight = new THREE.PointLight(0x7a5cff, 2);
-    purpleLight.position.set(-5, -5, 5);
-    scene.add(purpleLight);
+    const cyanLight = new THREE.PointLight(0x00eaff, 2);
+    cyanLight.position.set(-5, -5, 5);
+    scene.add(cyanLight);
 
     const loader = new THREE.FontLoader();
 
@@ -50,12 +48,12 @@ if (introContainer && canvas) {
         function (font) {
 
             const geometry = new THREE.TextGeometry(
-                "Welcome to\nHKB Automations",
+                "WELCOME",
                 {
                     font: font,
-                    size: 0.6,
-                    height: 0.25,
-                    curveSegments: 12
+                    size: 0.8,
+                    height: 0.3,
+                    curveSegments: 16
                 }
             );
 
@@ -64,7 +62,7 @@ if (introContainer && canvas) {
             const material = new THREE.MeshPhysicalMaterial({
                 color: 0xffffff,
                 metalness: 1,
-                roughness: 0.2,
+                roughness: 0.15,
                 clearcoat: 1,
                 clearcoatRoughness: 0
             });
@@ -79,24 +77,25 @@ if (introContainer && canvas) {
 
                 frame++;
 
-                // Floating motion
-                textMesh.position.y = Math.sin(frame * 0.03) * 0.4;
+                // Slow luxury float
+                textMesh.position.y = Math.sin(frame * 0.02) * 0.3;
 
-                // Smooth rotation
-                textMesh.rotation.y += 0.005;
+                // Very smooth rotation
+                textMesh.rotation.y += 0.003;
 
-                // Cinematic slow zoom
-                if (frame < 200) {
+                // Cinematic zoom in
+                if (camera.position.z > 5) {
                     camera.position.z -= 0.01;
                 }
 
                 renderer.render(scene, camera);
 
-                if (frame > 400) {
+                // Fade out
+                if (frame > 450) {
                     introContainer.style.opacity = "0";
                     setTimeout(() => {
                         introContainer.remove();
-                    }, 1000);
+                    }, 1200);
                 }
             }
 
