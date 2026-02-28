@@ -2,62 +2,7 @@ window.addEventListener("load", function () {
 
     /* ===== 3D INTRO (INDEX ONLY) ===== */
 
-    if (window.location.pathname.includes("index") || 
-        window.location.pathname === "/" ||
-        window.location.pathname.endsWith("/Ai-automations-portfolio/")) {
-
-        const introScreen = document.getElementById("intro-screen");
-
-        if (introScreen) {
-
-            const introScene = new THREE.Scene();
-            const introCamera = new THREE.PerspectiveCamera(
-                75,
-                window.innerWidth / window.innerHeight,
-                0.1,
-                1000
-            );
-
-            const introRenderer = new THREE.WebGLRenderer({ alpha: true });
-            introRenderer.setSize(window.innerWidth, window.innerHeight);
-            introScreen.appendChild(introRenderer.domElement);
-
-            introCamera.position.z = 5;
-
-            const light = new THREE.PointLight(0x00f5ff, 2);
-            light.position.set(5, 5, 5);
-            introScene.add(light);
-
-            const material = new THREE.MeshStandardMaterial({
-                color: 0x00f5ff,
-                metalness: 0.8,
-                roughness: 0.2
-            });
-
-            const geometry = new THREE.BoxGeometry(2, 2, 0.5);
-            const cube = new THREE.Mesh(geometry, material);
-            introScene.add(cube);
-
-            let frame = 0;
-
-            function animateIntro() {
-                requestAnimationFrame(animateIntro);
-
-                frame++;
-                cube.rotation.x += 0.03;
-                cube.rotation.y += 0.03;
-
-                introRenderer.render(introScene, introCamera);
-
-                if (frame > 120) {
-                    introScreen.style.opacity = "0";
-                    setTimeout(() => introScreen.remove(), 500);
-                }
-            }
-
-            animateIntro();
-        }
-    }
+    
 
     /* ===== MAIN 3D BACKGROUND ===== */
 
