@@ -189,7 +189,9 @@ if (frame < 200) {
                     mainText.material.transparent = true;
                     subText.material.transparent = true;
                 }
-
+// Slow rotation of background particles
+bgParticles.rotation.y += 0.0008;
+bgParticles.rotation.x += 0.0003;
                 renderer.render(scene, camera);
 
                 // Exit to website
