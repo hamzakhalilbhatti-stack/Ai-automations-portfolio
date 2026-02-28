@@ -62,12 +62,13 @@ if (introContainer && canvas) {
 
             mainGeo.center();
 
-            const mainMat = new THREE.MeshPhysicalMaterial({
-                color: 0xffffff,
-                metalness: 1,
-                roughness: 0.1,
-                clearcoat: 1
-            });
+           const mainMat = new THREE.MeshStandardMaterial({
+    color: 0xd4af37,        // luxury gold
+    emissive: 0x3a2a00,     // subtle glow
+    emissiveIntensity: 0.6,
+    metalness: 0.8,
+    roughness: 0.3
+});
 
             const mainText = new THREE.Mesh(mainGeo, mainMat);
             scene.add(mainText);
