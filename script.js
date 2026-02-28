@@ -32,17 +32,23 @@ if (introContainer && canvas) {
     // Luxury Background
     scene.background = new THREE.Color("#0a0f1f");
 
-    // Premium Lighting
-    const ambient = new THREE.AmbientLight(0xffffff, 0.6);
-    scene.add(ambient);
+    // Strong front light (important!)
+const frontLight = new THREE.DirectionalLight(0xffffff, 2);
+frontLight.position.set(0, 0, 10);
+scene.add(frontLight);
 
-    const goldLight = new THREE.PointLight(0xd4af37, 3);
-    goldLight.position.set(5, 5, 5);
-    scene.add(goldLight);
+// Gold side light
+const goldLight = new THREE.PointLight(0xd4af37, 3);
+goldLight.position.set(5, 5, 5);
+scene.add(goldLight);
 
-    const cyanLight = new THREE.PointLight(0x00eaff, 2);
-    cyanLight.position.set(-5, -5, 5);
-    scene.add(cyanLight);
+// Cyan accent light
+const cyanLight = new THREE.PointLight(0x00eaff, 2);
+cyanLight.position.set(-5, -5, 5);
+scene.add(cyanLight);
+
+const ambient = new THREE.AmbientLight(0xffffff, 0.8);
+scene.add(ambient);
 
     const loader = new THREE.FontLoader();
 
