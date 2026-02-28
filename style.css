@@ -213,7 +213,8 @@ footer {
 #intro-screen {
     transition: opacity 0.5s ease;
 }
-/* ===== PREMIUM INTRO ===== */
+
+/* ===== LUXURY FUTURISTIC INTRO ===== */
 
 #intro-container {
     position: fixed;
@@ -223,16 +224,52 @@ footer {
     left: 0;
     z-index: 9999;
     overflow: hidden;
-    transition: opacity 1s ease;
+    transition: opacity 1.2s ease;
 
-    /* Gradient matching your website */
-    background: radial-gradient(circle at 30% 40%, #7a5cff55, transparent),
-                radial-gradient(circle at 70% 60%, #00f5ff44, transparent),
-                #0b0f19;
+    background: radial-gradient(circle at 20% 30%, #00eaff22, transparent),
+                radial-gradient(circle at 80% 70%, #d4af3722, transparent),
+                #0a0f1f;
 }
 
 #intro-canvas {
     width: 100%;
     height: 100%;
     display: block;
+}
+
+/* Overlay Text */
+
+.intro-overlay-text {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    top: 65%;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Poppins', sans-serif;
+    color: #ffffff;
+    opacity: 0;
+    animation: fadeInText 3s ease forwards;
+    animation-delay: 1s;
+}
+
+.intro-overlay-text h1 {
+    font-size: 2.5rem;
+    letter-spacing: 4px;
+    background: linear-gradient(90deg, #ffffff, #d4af37);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.intro-overlay-text p {
+    font-size: 1rem;
+    margin-top: 10px;
+    color: #cccccc;
+    letter-spacing: 2px;
+}
+
+@keyframes fadeInText {
+    to {
+        opacity: 1;
+    }
 }
