@@ -213,3 +213,21 @@ footer {
 #intro-screen {
     transition: opacity 0.5s ease;
 }
+/* ===== 3D INTRO SAFE VERSION ===== */
+
+#intro-container {
+    position: fixed;
+    width: 100%;
+    height: 100vh;
+    background: #050508;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+    transition: opacity 1s ease;
+}
+
+#intro-canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
