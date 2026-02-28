@@ -10,7 +10,33 @@ const canvas = document.getElementById("intro-canvas");
 if (introContainer && canvas) {
 
     const scene = new THREE.Scene();
+   // ===== Subtle Floating Background Particles =====
+const bgGeometry = new THREE.BufferGeometry();
+const bgCount = 800;
+const bgPositions = [];
 
+for (let i = 0; i < bgCount; i++) {
+    bgPositions.push(
+        (Math.random() - 0.5) * 50,
+        (Math.random() - 0.5) * 50,
+        (Math.random() - 0.5) * 50
+    );
+}
+
+bgGeometry.setAttribute(
+    "position",
+    new THREE.Float32BufferAttribute(bgPositions, 3)
+);
+
+const bgMaterial = new THREE.PointsMaterial({
+    color: 0x00eaff,
+    size: 0.05,
+    transparent: true,
+    opacity: 0.6
+});
+
+const bgParticles = new THREE.Points(bgGeometry, bgMaterial);
+scene.add(bgParticles);
     const camera = new THREE.PerspectiveCamera(
         60,
         window.innerWidth / window.innerHeight,
