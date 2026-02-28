@@ -1,87 +1,109 @@
 window.addEventListener("load", function () {
 
-    /* =============================
-       3D FLOATING TEXT INTRO
-    ============================== */
+ /* =============================
+   PREMIUM 3D FLOATING INTRO
+============================= */
 
-    const introContainer = document.getElementById("intro-container");
-    const canvas = document.getElementById("intro-canvas");
+const introContainer = document.getElementById("intro-container");
+const canvas = document.getElementById("intro-canvas");
 
-    if (introContainer && canvas) {
+if (introContainer && canvas) {
 
-        const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(
-            75,
-            window.innerWidth / window.innerHeight,
-            0.1,
-            1000
-        );
+    const scene = new THREE.Scene();
 
-        const renderer = new THREE.WebGLRenderer({
-            canvas: canvas,
-            antialias: true
-        });
+    const camera = new THREE.PerspectiveCamera(
+        60,
+        window.innerWidth / window.innerHeight,
+        0.1,
+        1000
+    );
 
-        renderer.setSize(window.innerWidth, window.innerHeight);
+    const renderer = new THREE.WebGLRenderer({
+        canvas: canvas,
+        antialias: true,
+        alpha: true
+    });
 
-        camera.position.z = 5;
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(window.devicePixelRatio);
 
-        const light = new THREE.PointLight(0x00f5ff, 2);
-        light.position.set(5, 5, 5);
-        scene.add(light);
+    camera.position.z = 6;
 
-        const loader = new THREE.FontLoader();
+    // Soft ambient light
+    const ambient = new THREE.AmbientLight(0xffffff, 0.6);
+    scene.add(ambient);
 
-        loader.load(
-            "https://threejs.org/examples/fonts/helvetiker_regular.typeface.json",
-            function (font) {
+    // Cyan light
+    const cyanLight = new THREE.PointLight(0x00f5ff, 2);
+    cyanLight.position.set(5, 5, 5);
+    scene.add(cyanLight);
 
-                const geometry = new THREE.TextGeometry(
-                    "Welcome to HKB Automations",
-                    {
-                        font: font,
-                        size: 0.5,
-                        height: 0.2,
-                        curveSegments: 12
-                    }
-                );
+    // Purple light
+    const purpleLight = new THREE.PointLight(0x7a5cff, 2);
+    purpleLight.position.set(-5, -5, 5);
+    scene.add(purpleLight);
 
-                geometry.center();
+    const loader = new THREE.FontLoader();
 
-                const material = new THREE.MeshStandardMaterial({
-                    color: 0x00f5ff,
-                    metalness: 0.8,
-                    roughness: 0.2
-                });
+    loader.load(
+        "https://threejs.org/examples/fonts/helvetiker_regular.typeface.json",
+        function (font) {
 
-                const textMesh = new THREE.Mesh(geometry, material);
-                scene.add(textMesh);
+            const geometry = new THREE.TextGeometry(
+                "Welcome to\nHKB Automations",
+                {
+                    font: font,
+                    size: 0.6,
+                    height: 0.25,
+                    curveSegments: 12
+                }
+            );
 
-                let frame = 0;
+            geometry.center();
 
-                function animateIntro() {
-                    requestAnimationFrame(animateIntro);
+            const material = new THREE.MeshPhysicalMaterial({
+                color: 0xffffff,
+                metalness: 1,
+                roughness: 0.2,
+                clearcoat: 1,
+                clearcoatRoughness: 0
+            });
 
-                    frame++;
+            const textMesh = new THREE.Mesh(geometry, material);
+            scene.add(textMesh);
 
-                    textMesh.rotation.y += 0.01;
-                    textMesh.position.y = Math.sin(frame * 0.05) * 0.3;
+            let frame = 0;
 
-                    renderer.render(scene, camera);
+            function animateIntro() {
+                requestAnimationFrame(animateIntro);
 
-                    if (frame > 300) {
-                        introContainer.style.opacity = "0";
-                        setTimeout(() => {
-                            introContainer.remove();
-                        }, 1000);
-                    }
+                frame++;
+
+                // Floating motion
+                textMesh.position.y = Math.sin(frame * 0.03) * 0.4;
+
+                // Smooth rotation
+                textMesh.rotation.y += 0.005;
+
+                // Cinematic slow zoom
+                if (frame < 200) {
+                    camera.position.z -= 0.01;
                 }
 
-                animateIntro();
-            }
-        );
-    }
+                renderer.render(scene, camera);
 
+                if (frame > 400) {
+                    introContainer.style.opacity = "0";
+                    setTimeout(() => {
+                        introContainer.remove();
+                    }, 1000);
+                }
+            }
+
+            animateIntro();
+        }
+    );
+}
     /* =============================
        MAIN PARTICLE BACKGROUND
     ============================== */
