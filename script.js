@@ -157,7 +157,11 @@ scene.add(ambient);
             function animateIntro() {
                 requestAnimationFrame(animateIntro);
                 frame++;
-
+                // Cinematic camera movement
+if (frame < 200) {
+    camera.position.x = Math.sin(frame * 0.01) * 1.5;
+    camera.position.y = Math.cos(frame * 0.01) * 0.5;
+}
                 // Floating luxury movement
                 mainText.position.y = Math.sin(frame * 0.02) * 0.2;
                 mainText.rotation.y += 0.003;
