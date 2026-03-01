@@ -66,7 +66,7 @@ if (introContainer && canvas) {
     const bgParticles = new THREE.Points(bgGeometry, bgMaterial);
     scene.add(bgParticles);
 
-    /* ===== LOAD MAIN TEXT ===== */
+    /* ===== LOAD MAIN TEXT (ONLY ONE) ===== */
 
     const loader = new THREE.FontLoader();
 
@@ -86,13 +86,11 @@ if (introContainer && canvas) {
 
             geo.center();
 
-            // MAIN PAGE COLOR (Neon Cyan)
+            // Restored Luxury Gold
             const mainMaterial = new THREE.MeshStandardMaterial({
-                color: 0x00f5ff,
-                emissive: 0x00f5ff,
-                emissiveIntensity: 0.6,
-                metalness: 0.8,
-                roughness: 0.2
+                color: 0xf5d27a,
+                metalness: 1,
+                roughness: 0.3
             });
 
             const text = new THREE.Mesh(geo, mainMaterial);
@@ -138,14 +136,12 @@ if (introContainer && canvas) {
                 requestAnimationFrame(animate);
                 frame++;
 
-                // Fade in text
                 if (text.material.opacity < 1 && frame < 100) {
                     text.material.opacity += 0.02;
                 }
 
                 bgParticles.rotation.y += 0.0008;
 
-                // Trigger burst
                 if (frame > 160) burstStarted = true;
 
                 if (burstStarted) {
