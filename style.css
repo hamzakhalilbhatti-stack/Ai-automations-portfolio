@@ -273,3 +273,127 @@ footer {
         opacity: 1;
     }
 }
+/* ===============================
+   HERO SECTION
+=============================== */
+
+.hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 8%;
+    position: relative;
+    color: white;
+}
+
+.hero-content {
+    max-width: 600px;
+    animation: fadeUp 1.2s ease forwards;
+    opacity: 0;
+}
+
+.hero-title {
+    font-size: 4.2rem;
+    line-height: 1.1;
+    font-weight: 700;
+    margin-bottom: 30px;
+}
+
+.hero-title span {
+    color: #00f5ff;
+    text-shadow: 0 0 20px rgba(0,245,255,0.4);
+}
+
+.hero-text {
+    font-size: 1.2rem;
+    color: #cbd5e1;
+    margin-bottom: 40px;
+    line-height: 1.6;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 20px;
+}
+
+.btn-primary {
+    padding: 14px 28px;
+    background: #00f5ff;
+    color: #000;
+    text-decoration: none;
+    font-weight: 600;
+    border-radius: 6px;
+    transition: 0.3s ease;
+}
+
+.btn-primary:hover {
+    box-shadow: 0 0 25px rgba(0,245,255,0.6);
+}
+
+.btn-secondary {
+    padding: 14px 28px;
+    border: 1px solid #00f5ff;
+    color: #00f5ff;
+    text-decoration: none;
+    border-radius: 6px;
+    transition: 0.3s ease;
+}
+
+.btn-secondary:hover {
+    background: rgba(0,245,255,0.1);
+}
+
+/* RIGHT SIDE VISUAL */
+
+.hero-visual {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.glow-orb {
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, #00f5ff 0%, transparent 70%);
+    border-radius: 50%;
+    filter: blur(60px);
+    animation: float 6s ease-in-out infinite;
+}
+
+/* Animations */
+
+@keyframes fadeUp {
+    from {
+        transform: translateY(40px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-25px); }
+    100% { transform: translateY(0px); }
+}
+
+/* Responsive */
+
+@media(max-width: 1000px) {
+    .hero {
+        flex-direction: column;
+        text-align: center;
+        padding-top: 120px;
+    }
+
+    .hero-visual {
+        margin-top: 60px;
+    }
+
+    .hero-title {
+        font-size: 3rem;
+    }
+}
