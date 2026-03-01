@@ -57,7 +57,7 @@ if (introContainer && canvas) {
     );
 
     const bgMaterial = new THREE.PointsMaterial({
-        color: 0x00eaff,
+        color: 0x00f5ff,
         size: 0.06,
         transparent: true,
         opacity: 0.4
