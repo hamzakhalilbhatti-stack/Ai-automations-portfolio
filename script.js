@@ -10,7 +10,7 @@ const canvas = document.getElementById("intro-canvas");
 if (introContainer && canvas) {
 
     const scene = new THREE.Scene();
-    scene.background = new THREE.Color("#060b18"); // Premium deep navy
+    scene.background = new THREE.Color("#060b18");
 
     const camera = new THREE.PerspectiveCamera(
         60,
@@ -28,23 +28,19 @@ if (introContainer && canvas) {
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio(window.devicePixelRatio);
 
-    /* ===== LIGHTING (Luxury Glow Setup) ===== */
+    /* ===== LIGHTING ===== */
 
-    const keyLight = new THREE.DirectionalLight(0xffffff, 2.2);
+    const keyLight = new THREE.DirectionalLight(0xffffff, 2);
     keyLight.position.set(0, 2, 10);
     scene.add(keyLight);
 
-    const fillLight = new THREE.PointLight(0xffe6b3, 2, 20);
-    fillLight.position.set(0, 0, 6);
-    scene.add(fillLight);
-
-    const ambient = new THREE.AmbientLight(0xffffff, 0.6);
+    const ambient = new THREE.AmbientLight(0xffffff, 0.8);
     scene.add(ambient);
 
     /* ===== BACKGROUND PARTICLES ===== */
 
     const bgGeometry = new THREE.BufferGeometry();
-    const bgCount = 1200;
+    const bgCount = 1000;
     const bgPositions = [];
 
     for (let i = 0; i < bgCount; i++) {
@@ -90,13 +86,10 @@ if (introContainer && canvas) {
 
             geo.center();
 
-            // 🔥 Correct Luxury Champagne Gold
             const luxuryMaterial = new THREE.MeshStandardMaterial({
-                color: 0xf5d27a,        // warm champagne gold
-                emissive: 0x8c6a2b,     // soft gold glow
-                emissiveIntensity: 0.6,
+                color: 0xf5d27a,
                 metalness: 1,
-                roughness: 0.25
+                roughness: 0.3
             });
 
             const text = new THREE.Mesh(geo, luxuryMaterial);
@@ -107,16 +100,16 @@ if (introContainer && canvas) {
             /* ===== BURST ===== */
 
             const burstGeometry = new THREE.BufferGeometry();
-            const burstCount = 2000;
+            const burstCount = 1800;
             const positions = [];
             const velocities = [];
 
             for (let i = 0; i < burstCount; i++) {
                 positions.push(0, 0, 0);
                 velocities.push(
-                    (Math.random() - 0.5) * 1.2,
-                    (Math.random() - 0.5) * 1.2,
-                    (Math.random() - 0.5) * 1.2
+                    (Math.random() - 0.5) * 1.4,
+                    (Math.random() - 0.5) * 1.4,
+                    (Math.random() - 0.5) * 1.4
                 );
             }
 
@@ -126,9 +119,8 @@ if (introContainer && canvas) {
             );
 
             const burstMaterial = new THREE.PointsMaterial({
-                color: 0xffd700, // brighter gold for explosion
-                size: 0.1,
-                transparent: true
+                color: 0xffd700,
+                size: 0.12
             });
 
             const burst = new THREE.Points(burstGeometry, burstMaterial);
@@ -141,16 +133,14 @@ if (introContainer && canvas) {
                 requestAnimationFrame(animate);
                 frame++;
 
-                // Fade in text
-                if (text.material.opacity < 1 && frame < 120) {
+                // Fade in
+                if (text.material.opacity < 1 && frame < 100) {
                     text.material.opacity += 0.02;
                 }
 
-                // Subtle particle movement
                 bgParticles.rotation.y += 0.0008;
 
-                // Trigger burst
-                if (frame > 180) burstStarted = true;
+                if (frame > 160) burstStarted = true;
 
                 if (burstStarted) {
                     const posArray = burst.geometry.attributes.position.array;
@@ -163,12 +153,12 @@ if (introContainer && canvas) {
 
                     burst.geometry.attributes.position.needsUpdate = true;
 
-                    text.material.opacity = Math.max(0, 1 - (frame - 180) / 60);
+                    text.material.opacity = Math.max(0, 1 - (frame - 160) / 60);
                 }
 
                 renderer.render(scene, camera);
 
-                if (frame > 260) {
+                if (frame > 240) {
                     introContainer.style.opacity = "0";
                     setTimeout(() => introContainer.remove(), 1000);
                 }
@@ -185,7 +175,7 @@ if (introContainer && canvas) {
     });
 }
 
-});
+
 /* =====================================
    MAIN WEBSITE PARTICLE BACKGROUND
 ===================================== */
