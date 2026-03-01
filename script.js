@@ -1,7 +1,7 @@
 window.addEventListener("load", function () {
 
 /* =====================================
-   HKB AUTOMATIONS – LUXURY INTRO
+   HKB AUTOMATIONS – CLEAN INTRO
 ===================================== */
 
 const introContainer = document.getElementById("intro-container");
@@ -29,43 +29,14 @@ if (introContainer && canvas) {
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio(window.devicePixelRatio);
 
-    // ===== Lighting =====
+    // ===== Simple Professional Lighting =====
 
-  const frontLight = new THREE.DirectionalLight(0xffffff, 1.5);
-frontLight.position.set(0, 0, 10);
-scene.add(frontLight);
+    const frontLight = new THREE.DirectionalLight(0xffffff, 1.5);
+    frontLight.position.set(0, 0, 10);
+    scene.add(frontLight);
 
-const ambient = new THREE.AmbientLight(0xffffff, 0.9);
-scene.add(ambient);
-
-    // ===== Background Particles =====
-
-    const bgGeometry = new THREE.BufferGeometry();
-    const bgCount = 1000;
-    const bgPositions = [];
-
-    for (let i = 0; i < bgCount; i++) {
-        bgPositions.push(
-            (Math.random() - 0.5) * 40,
-            (Math.random() - 0.5) * 40,
-            (Math.random() - 0.5) * 40
-        );
-    }
-
-    bgGeometry.setAttribute(
-        "position",
-        new THREE.Float32BufferAttribute(bgPositions, 3)
-    );
-
-    const bgMaterial = new THREE.PointsMaterial({
-        color: 0x00eaff,
-        size: 0.05,
-        transparent: true,
-        opacity: 0.5
-    });
-
-    const bgParticles = new THREE.Points(bgGeometry, bgMaterial);
-    scene.add(bgParticles);
+    const ambient = new THREE.AmbientLight(0xffffff, 0.9);
+    scene.add(ambient);
 
     // ===== Load Text =====
 
@@ -75,128 +46,68 @@ scene.add(ambient);
         "https://threejs.org/examples/fonts/helvetiker_bold.typeface.json",
         function (font) {
 
+            // Main Heading
             const mainGeo = new THREE.TextGeometry(
-                "THE HKB AUTOMATIONS",
+                "HKB AUTOMATIONS",
                 {
                     font: font,
                     size: 0.7,
-                    height: 0.25,
+                    height: 0.2,
                     curveSegments: 16
                 }
             );
 
             mainGeo.center();
 
-          const material = new THREE.MeshStandardMaterial({
-    color: 0xcbb88a,
-    metalness: 0.4,
-    roughness: 0.6
-});
+            const material = new THREE.MeshStandardMaterial({
+                color: 0xcbb88a,   // same as your hero text
+                metalness: 0.4,
+                roughness: 0.6
+            });
 
             const mainText = new THREE.Mesh(mainGeo, material);
-            mainText.position.set(0, 0.4, 0);
+            mainText.position.set(0, 0.5, 0);
             scene.add(mainText);
 
+            // Sub Heading
             const subGeo = new THREE.TextGeometry(
-                "innovating the future with intelligent automation",
+                "Innovating the Future with Intelligent Automation",
                 {
                     font: font,
                     size: 0.22,
-                    height: 0.08
+                    height: 0.05
                 }
             );
 
             subGeo.center();
 
             const subText = new THREE.Mesh(subGeo, material);
-            subText.position.set(0, -0.8, 0);
+            subText.position.set(0, -0.7, 0);
             scene.add(subText);
 
-            // ===== Burst Setup =====
-
-            const burstGeometry = new THREE.BufferGeometry();
-            const burstCount = 1200;
-            const positions = [];
-            const velocities = [];
-
-            for (let i = 0; i < burstCount; i++) {
-                positions.push(0, 0, 0);
-                velocities.push(
-                    (Math.random() - 0.5) * 0.5,
-                    (Math.random() - 0.5) * 0.5,
-                    (Math.random() - 0.5) * 0.5
-                );
-            }
-
-            burstGeometry.setAttribute(
-                "position",
-                new THREE.Float32BufferAttribute(positions, 3)
-            );
-
-            const burstMaterial = new THREE.PointsMaterial({
-                color: 0xd4af37,
-                size: 0.06
-            });
-
-            const burst = new THREE.Points(burstGeometry, burstMaterial);
-            scene.add(burst);
-
-            let frame = 0;
-            let burstStarted = false;
+            // ===== Clean Fade Animation =====
 
             let opacity = 0;
 
-function animate() {
-    requestAnimationFrame(animate);
+            mainText.material.transparent = true;
+            subText.material.transparent = true;
 
-    if (opacity < 1) {
-        opacity += 0.01;
-        mainText.material.transparent = true;
-        subText.material.transparent = true;
-        mainText.material.opacity = opacity;
-        subText.material.opacity = opacity;
-    }
+            function animate() {
+                requestAnimationFrame(animate);
 
-    renderer.render(scene, camera);
-
-    if (opacity >= 1) {
-        setTimeout(() => {
-            introContainer.style.opacity = "0";
-            setTimeout(() => introContainer.remove(), 1000);
-        }, 1500);
-    }
-}
-            
-
-                // Rotate background slowly
-                bgParticles.rotation.y += 0.0006;
-                bgParticles.rotation.x += 0.0002;
-
-                // Start burst
-                if (frame > 280) burstStarted = true;
-
-                if (burstStarted) {
-                    const posArray = burst.geometry.attributes.position.array;
-
-                    for (let i = 0; i < burstCount; i++) {
-                        posArray[i * 3] += velocities[i * 3];
-                        posArray[i * 3 + 1] += velocities[i * 3 + 1];
-                        posArray[i * 3 + 2] += velocities[i * 3 + 2];
-                    }
-
-                    burst.geometry.attributes.position.needsUpdate = true;
-
-                    mainText.material.opacity = Math.max(0, 1 - (frame - 280) / 80);
-                    subText.material.opacity = Math.max(0, 1 - (frame - 280) / 80);
-                    mainText.material.transparent = true;
-                    subText.material.transparent = true;
+                if (opacity < 1) {
+                    opacity += 0.01;
+                    mainText.material.opacity = opacity;
+                    subText.material.opacity = opacity;
                 }
 
                 renderer.render(scene, camera);
 
-                if (frame > 380) {
-                    introContainer.style.opacity = "0";
-                    setTimeout(() => introContainer.remove(), 1000);
+                if (opacity >= 1) {
+                    setTimeout(() => {
+                        introContainer.style.opacity = "0";
+                        setTimeout(() => introContainer.remove(), 1000);
+                    }, 1800);
                 }
             }
 
