@@ -4,8 +4,6 @@ window.addEventListener("load", function () {
    HKB AUTOMATIONS – LUXURY INTRO
 ===================================== */
 
-window.addEventListener("load", function () {
-
 const introContainer = document.getElementById("intro-container");
 const canvas = document.getElementById("intro-canvas");
 
