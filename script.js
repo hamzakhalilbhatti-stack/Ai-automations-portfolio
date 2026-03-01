@@ -235,3 +235,21 @@ function animateBackground() {
 animateBackground();
 
 });
+/* ===========================
+   SCROLL REVEAL SYSTEM
+=========================== */
+
+const revealElements = document.querySelectorAll("section, .card");
+
+const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+        }
+    });
+}, { threshold: 0.15 });
+
+revealElements.forEach(el => {
+    el.classList.add("hidden");
+    revealObserver.observe(el);
+});
