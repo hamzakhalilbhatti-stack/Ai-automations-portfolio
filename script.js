@@ -1,7 +1,7 @@
 window.addEventListener("load", function () {
 
 /* =====================================
-   HKB AUTOMATIONS – LUXURY INTRO
+   HKB AUTOMATIONS – INTRO
 ===================================== */
 
 const introContainer = document.getElementById("intro-container");
@@ -66,7 +66,7 @@ if (introContainer && canvas) {
     const bgParticles = new THREE.Points(bgGeometry, bgMaterial);
     scene.add(bgParticles);
 
-    /* ===== LOAD TEXT ===== */
+    /* ===== LOAD MAIN TEXT ===== */
 
     const loader = new THREE.FontLoader();
 
@@ -86,13 +86,16 @@ if (introContainer && canvas) {
 
             geo.center();
 
-            const luxuryMaterial = new THREE.MeshStandardMaterial({
-                color: 0xf5d27a,
-                metalness: 1,
-                roughness: 0.3
+            // MAIN PAGE COLOR (Neon Cyan)
+            const mainMaterial = new THREE.MeshStandardMaterial({
+                color: 0x00f5ff,
+                emissive: 0x00f5ff,
+                emissiveIntensity: 0.6,
+                metalness: 0.8,
+                roughness: 0.2
             });
 
-            const text = new THREE.Mesh(geo, luxuryMaterial);
+            const text = new THREE.Mesh(geo, mainMaterial);
             text.material.transparent = true;
             text.material.opacity = 0;
             scene.add(text);
@@ -119,8 +122,10 @@ if (introContainer && canvas) {
             );
 
             const burstMaterial = new THREE.PointsMaterial({
-                color: 0xffd700,
-                size: 0.12
+                color: 0x00f5ff,
+                size: 0.14,
+                transparent: true,
+                opacity: 0.9
             });
 
             const burst = new THREE.Points(burstGeometry, burstMaterial);
@@ -133,13 +138,14 @@ if (introContainer && canvas) {
                 requestAnimationFrame(animate);
                 frame++;
 
-                // Fade in
+                // Fade in text
                 if (text.material.opacity < 1 && frame < 100) {
                     text.material.opacity += 0.02;
                 }
 
                 bgParticles.rotation.y += 0.0008;
 
+                // Trigger burst
                 if (frame > 160) burstStarted = true;
 
                 if (burstStarted) {
