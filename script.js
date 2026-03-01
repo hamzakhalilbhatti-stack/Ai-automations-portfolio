@@ -31,19 +31,11 @@ if (introContainer && canvas) {
 
     // ===== Lighting =====
 
-    const frontLight = new THREE.DirectionalLight(0xffffff, 1.8);
+  const frontLight = new THREE.DirectionalLight(0xffffff, 1.5);
 frontLight.position.set(0, 0, 10);
 scene.add(frontLight);
 
-const cyanLight = new THREE.PointLight(0x00f5ff, 3);
-cyanLight.position.set(5, 5, 5);
-scene.add(cyanLight);
-
-const violetLight = new THREE.PointLight(0x7a5cff, 2);
-violetLight.position.set(-5, -5, 5);
-scene.add(violetLight);
-
-const ambient = new THREE.AmbientLight(0xffffff, 0.7);
+const ambient = new THREE.AmbientLight(0xffffff, 0.9);
 scene.add(ambient);
 
     // ===== Background Particles =====
@@ -95,12 +87,10 @@ scene.add(ambient);
 
             mainGeo.center();
 
-           const material = new THREE.MeshStandardMaterial({
-    color: 0x00f5ff,        // electric cyan
-    emissive: 0x002a33,     // soft inner glow
-    emissiveIntensity: 1.2,
-    metalness: 0.6,
-    roughness: 0.2
+          const material = new THREE.MeshStandardMaterial({
+    color: 0xcbb88a,
+    metalness: 0.4,
+    roughness: 0.6
 });
 
             const mainText = new THREE.Mesh(mainGeo, material);
@@ -154,15 +144,29 @@ scene.add(ambient);
             let frame = 0;
             let burstStarted = false;
 
-            function animate() {
-                requestAnimationFrame(animate);
-                frame++;
+            let opacity = 0;
 
-                // Floating motion
-                mainText.position.y = 0.4 + Math.sin(frame * 0.02) * 0.15;
-                mainText.rotation.y += 0.002;
+function animate() {
+    requestAnimationFrame(animate);
 
-                subText.position.y = -0.8 + Math.sin(frame * 0.02) * 0.15;
+    if (opacity < 1) {
+        opacity += 0.01;
+        mainText.material.transparent = true;
+        subText.material.transparent = true;
+        mainText.material.opacity = opacity;
+        subText.material.opacity = opacity;
+    }
+
+    renderer.render(scene, camera);
+
+    if (opacity >= 1) {
+        setTimeout(() => {
+            introContainer.style.opacity = "0";
+            setTimeout(() => introContainer.remove(), 1000);
+        }, 1500);
+    }
+}
+            
 
                 // Rotate background slowly
                 bgParticles.rotation.y += 0.0006;
