@@ -4,13 +4,15 @@ window.addEventListener("load", function () {
    HKB AUTOMATIONS – LUXURY INTRO
 ===================================== */
 
+window.addEventListener("load", function () {
+
 const introContainer = document.getElementById("intro-container");
 const canvas = document.getElementById("intro-canvas");
 
 if (introContainer && canvas) {
 
     const scene = new THREE.Scene();
-    scene.background = new THREE.Color("#0b0f1e"); // Deep luxury navy
+    scene.background = new THREE.Color("#060b18"); // Premium deep navy
 
     const camera = new THREE.PerspectiveCamera(
         60,
@@ -18,7 +20,6 @@ if (introContainer && canvas) {
         0.1,
         1000
     );
-
     camera.position.z = 8;
 
     const renderer = new THREE.WebGLRenderer({
@@ -29,19 +30,23 @@ if (introContainer && canvas) {
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio(window.devicePixelRatio);
 
-    /* ===== Lighting ===== */
+    /* ===== LIGHTING (Luxury Glow Setup) ===== */
 
-    const frontLight = new THREE.DirectionalLight(0xffffff, 1.8);
-    frontLight.position.set(0, 0, 10);
-    scene.add(frontLight);
+    const keyLight = new THREE.DirectionalLight(0xffffff, 2.2);
+    keyLight.position.set(0, 2, 10);
+    scene.add(keyLight);
 
-    const ambient = new THREE.AmbientLight(0xffffff, 1);
+    const fillLight = new THREE.PointLight(0xffe6b3, 2, 20);
+    fillLight.position.set(0, 0, 6);
+    scene.add(fillLight);
+
+    const ambient = new THREE.AmbientLight(0xffffff, 0.6);
     scene.add(ambient);
 
-    /* ===== Background Particles ===== */
+    /* ===== BACKGROUND PARTICLES ===== */
 
     const bgGeometry = new THREE.BufferGeometry();
-    const bgCount = 1000;
+    const bgCount = 1200;
     const bgPositions = [];
 
     for (let i = 0; i < bgCount; i++) {
@@ -58,16 +63,16 @@ if (introContainer && canvas) {
     );
 
     const bgMaterial = new THREE.PointsMaterial({
-        color: 0x00f5ff,
-        size: 0.05,
+        color: 0x00eaff,
+        size: 0.06,
         transparent: true,
-        opacity: 0.5
+        opacity: 0.4
     });
 
     const bgParticles = new THREE.Points(bgGeometry, bgMaterial);
     scene.add(bgParticles);
 
-    /* ===== Load Main Text ===== */
+    /* ===== LOAD TEXT ===== */
 
     const loader = new THREE.FontLoader();
 
@@ -75,44 +80,45 @@ if (introContainer && canvas) {
         "https://threejs.org/examples/fonts/helvetiker_bold.typeface.json",
         function (font) {
 
-            const mainGeo = new THREE.TextGeometry(
+            const geo = new THREE.TextGeometry(
                 "HKB AUTOMATIONS",
                 {
                     font: font,
-                    size: 0.8,
-                    height: 0.25,
-                    curveSegments: 16
+                    size: 0.85,
+                    height: 0.28,
+                    curveSegments: 20
                 }
             );
 
-            mainGeo.center();
+            geo.center();
 
-            // Luxury Gold Material (same as 2nd one)
-            const goldMaterial = new THREE.MeshStandardMaterial({
-                color: 0xd4af37,
+            // 🔥 Correct Luxury Champagne Gold
+            const luxuryMaterial = new THREE.MeshStandardMaterial({
+                color: 0xf5d27a,        // warm champagne gold
+                emissive: 0x8c6a2b,     // soft gold glow
+                emissiveIntensity: 0.6,
                 metalness: 1,
-                roughness: 0.2
+                roughness: 0.25
             });
 
-            const mainText = new THREE.Mesh(mainGeo, goldMaterial);
-            mainText.position.set(0, 0, 0);
-            mainText.material.transparent = true;
-            mainText.material.opacity = 0;
-            scene.add(mainText);
+            const text = new THREE.Mesh(geo, luxuryMaterial);
+            text.material.transparent = true;
+            text.material.opacity = 0;
+            scene.add(text);
 
-            /* ===== Burst Setup ===== */
+            /* ===== BURST ===== */
 
             const burstGeometry = new THREE.BufferGeometry();
-            const burstCount = 1200;
+            const burstCount = 2000;
             const positions = [];
             const velocities = [];
 
             for (let i = 0; i < burstCount; i++) {
                 positions.push(0, 0, 0);
                 velocities.push(
-                    (Math.random() - 0.5) * 0.6,
-                    (Math.random() - 0.5) * 0.6,
-                    (Math.random() - 0.5) * 0.6
+                    (Math.random() - 0.5) * 1.2,
+                    (Math.random() - 0.5) * 1.2,
+                    (Math.random() - 0.5) * 1.2
                 );
             }
 
@@ -122,8 +128,9 @@ if (introContainer && canvas) {
             );
 
             const burstMaterial = new THREE.PointsMaterial({
-                color: 0xd4af37,
-                size: 0.07
+                color: 0xffd700, // brighter gold for explosion
+                size: 0.1,
+                transparent: true
             });
 
             const burst = new THREE.Points(burstGeometry, burstMaterial);
@@ -134,20 +141,18 @@ if (introContainer && canvas) {
 
             function animate() {
                 requestAnimationFrame(animate);
-
                 frame++;
 
-                // Fade In Text
-                if (mainText.material.opacity < 1 && frame < 120) {
-                    mainText.material.opacity += 0.02;
+                // Fade in text
+                if (text.material.opacity < 1 && frame < 120) {
+                    text.material.opacity += 0.02;
                 }
 
-                // Rotate background slowly (NOT text)
-                bgParticles.rotation.y += 0.0006;
-                bgParticles.rotation.x += 0.0002;
+                // Subtle particle movement
+                bgParticles.rotation.y += 0.0008;
 
-                // Start Burst
-                if (frame > 200) burstStarted = true;
+                // Trigger burst
+                if (frame > 180) burstStarted = true;
 
                 if (burstStarted) {
                     const posArray = burst.geometry.attributes.position.array;
@@ -160,12 +165,12 @@ if (introContainer && canvas) {
 
                     burst.geometry.attributes.position.needsUpdate = true;
 
-                    mainText.material.opacity = Math.max(0, 1 - (frame - 200) / 60);
+                    text.material.opacity = Math.max(0, 1 - (frame - 180) / 60);
                 }
 
                 renderer.render(scene, camera);
 
-                if (frame > 300) {
+                if (frame > 260) {
                     introContainer.style.opacity = "0";
                     setTimeout(() => introContainer.remove(), 1000);
                 }
@@ -183,7 +188,6 @@ if (introContainer && canvas) {
 }
 
 });
-
 /* =====================================
    MAIN WEBSITE PARTICLE BACKGROUND
 ===================================== */
