@@ -235,3 +235,14 @@ function animateBackground() {
 animateBackground();
 
 });
+const heroContent = document.querySelector(".hero-content");
+
+const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+        if(entry.isIntersecting){
+            heroContent.style.animation = "fadeUp 1.2s ease forwards";
+        }
+    });
+}, { threshold: 0.3 });
+
+observer.observe(heroContent);
