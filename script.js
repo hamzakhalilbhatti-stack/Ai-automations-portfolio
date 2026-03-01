@@ -84,7 +84,7 @@ scene.add(ambient);
         function (font) {
 
             const mainGeo = new THREE.TextGeometry(
-                "HKB AUTOMATIONS",
+                "THE HKB AUTOMATIONS",
                 {
                     font: font,
                     size: 0.7,
@@ -108,7 +108,7 @@ scene.add(ambient);
             scene.add(mainText);
 
             const subGeo = new THREE.TextGeometry(
-                "Engineering Intelligent Futures",
+                "innovating the future with intelligent automation",
                 {
                     font: font,
                     size: 0.22,
