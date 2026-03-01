@@ -75,7 +75,7 @@ if (introContainer && canvas) {
         function (font) {
 
             const geo = new THREE.TextGeometry(
-                "HKB AUTOMATIONS",
+                "THE HKB AUTOMATIONS",
                 {
                     font: font,
                     size: 0.85,
