@@ -1,7 +1,7 @@
 window.addEventListener("load", function () {
 
 /* =====================================
-   HKB AUTOMATIONS – CLEAN INTRO
+   HKB AUTOMATIONS – LUXURY INTRO
 ===================================== */
 
 const introContainer = document.getElementById("intro-container");
@@ -10,7 +10,7 @@ const canvas = document.getElementById("intro-canvas");
 if (introContainer && canvas) {
 
     const scene = new THREE.Scene();
-    scene.background = new THREE.Color("#0a0f1f");
+    scene.background = new THREE.Color("#0b0f1e"); // Deep luxury navy
 
     const camera = new THREE.PerspectiveCamera(
         60,
@@ -29,16 +29,45 @@ if (introContainer && canvas) {
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio(window.devicePixelRatio);
 
-    // ===== Simple Professional Lighting =====
+    /* ===== Lighting ===== */
 
-    const frontLight = new THREE.DirectionalLight(0xffffff, 1.5);
+    const frontLight = new THREE.DirectionalLight(0xffffff, 1.8);
     frontLight.position.set(0, 0, 10);
     scene.add(frontLight);
 
-    const ambient = new THREE.AmbientLight(0xffffff, 0.9);
+    const ambient = new THREE.AmbientLight(0xffffff, 1);
     scene.add(ambient);
 
-    // ===== Load Text =====
+    /* ===== Background Particles ===== */
+
+    const bgGeometry = new THREE.BufferGeometry();
+    const bgCount = 1000;
+    const bgPositions = [];
+
+    for (let i = 0; i < bgCount; i++) {
+        bgPositions.push(
+            (Math.random() - 0.5) * 40,
+            (Math.random() - 0.5) * 40,
+            (Math.random() - 0.5) * 40
+        );
+    }
+
+    bgGeometry.setAttribute(
+        "position",
+        new THREE.Float32BufferAttribute(bgPositions, 3)
+    );
+
+    const bgMaterial = new THREE.PointsMaterial({
+        color: 0x00f5ff,
+        size: 0.05,
+        transparent: true,
+        opacity: 0.5
+    });
+
+    const bgParticles = new THREE.Points(bgGeometry, bgMaterial);
+    scene.add(bgParticles);
+
+    /* ===== Load Main Text ===== */
 
     const loader = new THREE.FontLoader();
 
@@ -46,68 +75,99 @@ if (introContainer && canvas) {
         "https://threejs.org/examples/fonts/helvetiker_bold.typeface.json",
         function (font) {
 
-            // Main Heading
             const mainGeo = new THREE.TextGeometry(
                 "HKB AUTOMATIONS",
                 {
                     font: font,
-                    size: 0.7,
-                    height: 0.2,
+                    size: 0.8,
+                    height: 0.25,
                     curveSegments: 16
                 }
             );
 
             mainGeo.center();
 
-            const material = new THREE.MeshStandardMaterial({
-                color: 0xcbb88a,   // same as your hero text
-                metalness: 0.4,
-                roughness: 0.6
+            // Luxury Gold Material (same as 2nd one)
+            const goldMaterial = new THREE.MeshStandardMaterial({
+                color: 0xd4af37,
+                metalness: 1,
+                roughness: 0.2
             });
 
-            const mainText = new THREE.Mesh(mainGeo, material);
-            mainText.position.set(0, 0.5, 0);
+            const mainText = new THREE.Mesh(mainGeo, goldMaterial);
+            mainText.position.set(0, 0, 0);
+            mainText.material.transparent = true;
+            mainText.material.opacity = 0;
             scene.add(mainText);
 
-            // Sub Heading
-            const subGeo = new THREE.TextGeometry(
-                "Innovating the Future with Intelligent Automation",
-                {
-                    font: font,
-                    size: 0.22,
-                    height: 0.05
-                }
+            /* ===== Burst Setup ===== */
+
+            const burstGeometry = new THREE.BufferGeometry();
+            const burstCount = 1200;
+            const positions = [];
+            const velocities = [];
+
+            for (let i = 0; i < burstCount; i++) {
+                positions.push(0, 0, 0);
+                velocities.push(
+                    (Math.random() - 0.5) * 0.6,
+                    (Math.random() - 0.5) * 0.6,
+                    (Math.random() - 0.5) * 0.6
+                );
+            }
+
+            burstGeometry.setAttribute(
+                "position",
+                new THREE.Float32BufferAttribute(positions, 3)
             );
 
-            subGeo.center();
+            const burstMaterial = new THREE.PointsMaterial({
+                color: 0xd4af37,
+                size: 0.07
+            });
 
-            const subText = new THREE.Mesh(subGeo, material);
-            subText.position.set(0, -0.7, 0);
-            scene.add(subText);
+            const burst = new THREE.Points(burstGeometry, burstMaterial);
+            scene.add(burst);
 
-            // ===== Clean Fade Animation =====
-
-            let opacity = 0;
-
-            mainText.material.transparent = true;
-            subText.material.transparent = true;
+            let frame = 0;
+            let burstStarted = false;
 
             function animate() {
                 requestAnimationFrame(animate);
 
-                if (opacity < 1) {
-                    opacity += 0.01;
-                    mainText.material.opacity = opacity;
-                    subText.material.opacity = opacity;
+                frame++;
+
+                // Fade In Text
+                if (mainText.material.opacity < 1 && frame < 120) {
+                    mainText.material.opacity += 0.02;
+                }
+
+                // Rotate background slowly (NOT text)
+                bgParticles.rotation.y += 0.0006;
+                bgParticles.rotation.x += 0.0002;
+
+                // Start Burst
+                if (frame > 200) burstStarted = true;
+
+                if (burstStarted) {
+                    const posArray = burst.geometry.attributes.position.array;
+
+                    for (let i = 0; i < burstCount; i++) {
+                        posArray[i * 3] += velocities[i * 3];
+                        posArray[i * 3 + 1] += velocities[i * 3 + 1];
+                        posArray[i * 3 + 2] += velocities[i * 3 + 2];
+                    }
+
+                    burst.geometry.attributes.position.needsUpdate = true;
+
+                    mainText.material.opacity = Math.max(0, 1 - (frame - 200) / 60);
                 }
 
                 renderer.render(scene, camera);
 
-                if (opacity >= 1) {
-                    setTimeout(() => {
-                        introContainer.style.opacity = "0";
-                        setTimeout(() => introContainer.remove(), 1000);
-                    }, 1800);
+                if (frame > 300) {
+                    introContainer.style.opacity = "0";
+                    setTimeout(() => introContainer.remove(), 1000);
                 }
             }
 
@@ -121,6 +181,8 @@ if (introContainer && canvas) {
         renderer.setSize(window.innerWidth, window.innerHeight);
     });
 }
+
+});
 
 /* =====================================
    MAIN WEBSITE PARTICLE BACKGROUND
