@@ -31,20 +31,20 @@ if (introContainer && canvas) {
 
     // ===== Lighting =====
 
-    const frontLight = new THREE.DirectionalLight(0xffffff, 2);
-    frontLight.position.set(0, 0, 10);
-    scene.add(frontLight);
+    const frontLight = new THREE.DirectionalLight(0xffffff, 1.8);
+frontLight.position.set(0, 0, 10);
+scene.add(frontLight);
 
-    const goldLight = new THREE.PointLight(0xd4af37, 3);
-    goldLight.position.set(5, 5, 5);
-    scene.add(goldLight);
+const cyanLight = new THREE.PointLight(0x00f5ff, 3);
+cyanLight.position.set(5, 5, 5);
+scene.add(cyanLight);
 
-    const cyanLight = new THREE.PointLight(0x00eaff, 2);
-    cyanLight.position.set(-5, -5, 5);
-    scene.add(cyanLight);
+const violetLight = new THREE.PointLight(0x7a5cff, 2);
+violetLight.position.set(-5, -5, 5);
+scene.add(violetLight);
 
-    const ambient = new THREE.AmbientLight(0xffffff, 0.8);
-    scene.add(ambient);
+const ambient = new THREE.AmbientLight(0xffffff, 0.7);
+scene.add(ambient);
 
     // ===== Background Particles =====
 
@@ -95,13 +95,13 @@ if (introContainer && canvas) {
 
             mainGeo.center();
 
-            const material = new THREE.MeshStandardMaterial({
-                color: 0xd4af37,
-                emissive: 0x3a2a00,
-                emissiveIntensity: 0.6,
-                metalness: 0.8,
-                roughness: 0.3
-            });
+           const material = new THREE.MeshStandardMaterial({
+    color: 0x00f5ff,        // electric cyan
+    emissive: 0x002a33,     // soft inner glow
+    emissiveIntensity: 1.2,
+    metalness: 0.6,
+    roughness: 0.2
+});
 
             const mainText = new THREE.Mesh(mainGeo, material);
             mainText.position.set(0, 0.4, 0);
