@@ -577,3 +577,138 @@ footer {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
+/* ================= ELITE PRICING (A + C) ================= */
+
+.pricing-section {
+    padding: 180px 8%;
+    text-align: center;
+}
+
+.pricing-wrapper {
+    display: flex;
+    justify-content: center;
+    gap: 60px;
+    flex-wrap: wrap;
+    margin-top: 90px;
+}
+
+.pricing-card {
+    width: 340px;
+    padding: 60px 40px;
+    border-radius: 20px;
+    background: rgba(255,255,255,0.03);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.08);
+    position: relative;
+    transition: all 0.5s ease;
+    transform: translateY(60px);
+    opacity: 0;
+}
+
+.pricing-card.active {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+/* CLEAN HOVER (Not aggressive) */
+.pricing-card:hover {
+    transform: translateY(-15px);
+    border: 1px solid rgba(0,245,255,0.4);
+    box-shadow: 0 0 40px rgba(0,245,255,0.15);
+}
+
+/* FEATURED */
+.featured {
+    border: 1px solid rgba(0,245,255,0.6);
+    box-shadow: 0 0 50px rgba(0,245,255,0.15);
+}
+
+.popular-tag {
+    position: absolute;
+    top: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(90deg,#00f5ff,#7a5cff);
+    padding: 6px 20px;
+    font-size: 12px;
+    border-radius: 20px;
+    color: black;
+    font-weight: bold;
+}
+
+/* ENTERPRISE GOLD ACCENT */
+.enterprise {
+    border: 1px solid rgba(245,210,122,0.4);
+}
+
+.enterprise:hover {
+    box-shadow: 0 0 50px rgba(245,210,122,0.25);
+}
+
+/* TYPOGRAPHY */
+
+.pricing-card h3 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    letter-spacing: 1px;
+}
+
+.price {
+    font-size: 44px;
+    font-weight: 700;
+    margin-bottom: 15px;
+    background: linear-gradient(90deg,#00f5ff,#7a5cff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.enterprise .price {
+    background: linear-gradient(90deg,#f5d27a,#ffb347);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.price-sub {
+    opacity: 0.6;
+    margin-bottom: 35px;
+    font-size: 15px;
+}
+
+.pricing-card ul {
+    list-style: none;
+    margin-bottom: 40px;
+}
+
+.pricing-card ul li {
+    margin-bottom: 14px;
+    opacity: 0.85;
+}
+
+/* BUTTONS */
+
+.pricing-btn {
+    padding: 14px 32px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    background: linear-gradient(90deg,#00f5ff,#7a5cff);
+    color: black;
+    transition: 0.3s ease;
+}
+
+.pricing-btn:hover {
+    filter: brightness(1.15);
+}
+
+.gold-btn {
+    background: linear-gradient(90deg,#f5d27a,#ffb347);
+}
+
+/* RESPONSIVE */
+
+@media(max-width: 1000px) {
+    .pricing-wrapper {
+        flex-direction: column;
+        align-items: center;
+    }
+}
