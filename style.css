@@ -1,7 +1,3 @@
-/* ===============================
-   GLOBAL RESET
-=============================== */
-
 * {
     margin: 0;
     padding: 0;
@@ -14,10 +10,6 @@ body {
     color: white;
     overflow-x: hidden;
 }
-
-/* ===============================
-   ANIMATED BACKGROUND
-=============================== */
 
 body::before {
     content: "";
@@ -36,10 +28,6 @@ body::before {
     100% { transform: translate(-100px,-50px); }
 }
 
-/* ===============================
-   NAVBAR
-=============================== */
-
 nav {
     position: fixed;
     width: 100%;
@@ -56,20 +44,15 @@ nav {
 nav a {
     color: white;
     text-decoration: none;
-    margin-left: 30px;
+    margin-left: 25px;
     transition: 0.3s;
 }
 
-nav a:hover {
-    color: #00f5ff;
-}
-
-/* ===============================
-   SECTIONS
-=============================== */
+nav a:hover { color: #00f5ff; }
 
 section {
     padding: 160px 8%;
+    scroll-margin-top: 120px;
 }
 
 .section-title {
@@ -78,9 +61,11 @@ section {
     font-size: 36px;
 }
 
-/* ===============================
-   GLASS CARD
-=============================== */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(300px,1fr));
+    gap: 30px;
+}
 
 .card {
     background: rgba(255,255,255,0.05);
@@ -88,7 +73,7 @@ section {
     padding: 30px;
     border-radius: 20px;
     border: 1px solid rgba(255,255,255,0.1);
-    transition: all 0.5s cubic-bezier(.2,.8,.2,1);
+    transition: 0.5s;
 }
 
 .card:hover {
@@ -96,19 +81,11 @@ section {
     box-shadow: 0 0 40px rgba(0,245,255,0.25);
 }
 
-/* ===============================
-   GRID
-=============================== */
-
-.grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit,minmax(300px,1fr));
-    gap: 30px;
+.center-card {
+    max-width: 700px;
+    margin: auto;
+    text-align: center;
 }
-
-/* ===============================
-   BUTTONS
-=============================== */
 
 .btn {
     padding: 14px 28px;
@@ -118,16 +95,7 @@ section {
     border-radius: 6px;
     font-weight: bold;
     cursor: pointer;
-    transition: 0.3s;
 }
-
-.btn:hover {
-    box-shadow: 0 0 25px rgba(0,245,255,0.6);
-}
-
-/* ===============================
-   PROJECTS
-=============================== */
 
 .projects-grid {
     display: flex;
@@ -142,8 +110,7 @@ section {
     height: 420px;
     border-radius: 20px;
     overflow: hidden;
-    cursor: pointer;
-    transition: transform 0.5s cubic-bezier(.2,.8,.2,1);
+    transition: 0.5s;
 }
 
 .project-card:hover {
@@ -156,8 +123,7 @@ section {
     width: 100%;
     padding: 40px;
     background: rgba(0,0,0,0.85);
-    backdrop-filter: blur(10px);
-    transition: bottom 0.6s cubic-bezier(.2,.8,.2,1);
+    transition: 0.6s;
 }
 
 .project-card:hover .project-overlay {
@@ -167,38 +133,24 @@ section {
 .metrics {
     font-weight: bold;
     color: #00f5ff;
-    font-size: 14px;
 }
 
-/* Background Images */
-
-.case1 {
-    background:
-        linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.8)),
-        url('https://images.unsplash.com/photo-1551288049-bebda4e38f71');
+.case1, .case2, .case3 {
     background-size: cover;
     background-position: center;
+}
+
+.case1 {
+    background-image: url('https://images.unsplash.com/photo-1551288049-bebda4e38f71');
 }
 
 .case2 {
-    background:
-        linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.8)),
-        url('https://images.unsplash.com/photo-1460925895917-afdab827c52f');
-    background-size: cover;
-    background-position: center;
+    background-image: url('https://images.unsplash.com/photo-1460925895917-afdab827c52f');
 }
 
 .case3 {
-    background:
-        linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.8)),
-        url('https://images.unsplash.com/photo-1504384308090-c894fdcc538d');
-    background-size: cover;
-    background-position: center;
+    background-image: url('https://images.unsplash.com/photo-1504384308090-c894fdcc538d');
 }
-
-/* ===============================
-   PRICING
-=============================== */
 
 .pricing-grid {
     display: flex;
@@ -212,15 +164,12 @@ section {
     padding: 50px 35px;
     border-radius: 20px;
     background: rgba(255,255,255,0.04);
-    backdrop-filter: blur(15px);
-    border: 1px solid rgba(255,255,255,0.08);
     text-align: center;
     transition: 0.5s;
 }
 
 .pricing-card:hover {
     transform: translateY(-12px);
-    box-shadow: 0 0 50px rgba(0,245,255,0.25);
 }
 
 .featured {
@@ -232,24 +181,56 @@ section {
     color: #f5d27a;
 }
 
-/* ===============================
-   SCROLL REVEAL
-=============================== */
+.timeline {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 80px;
+    position: relative;
+}
+
+.timeline::before {
+    content: "";
+    position: absolute;
+    top: 35px;
+    left: 5%;
+    width: 90%;
+    height: 2px;
+    background: linear-gradient(90deg,#00f5ff,#7a5cff);
+}
+
+.timeline-step {
+    width: 22%;
+    text-align: center;
+    padding-top: 60px;
+    position: relative;
+}
+
+.step-number {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #00f5ff;
+    color: black;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
 
 .reveal {
     opacity: 0;
     transform: translateY(60px);
-    transition: all 1s cubic-bezier(.2,.8,.2,1);
+    transition: 1s;
 }
 
 .reveal.active {
     opacity: 1;
     transform: translateY(0);
 }
-
-/* ===============================
-   FLOATING GLOW
-=============================== */
 
 .glow {
     position: fixed;
@@ -259,7 +240,6 @@ section {
     filter: blur(150px);
     z-index: -1;
     opacity: 0.25;
-    animation: floatGlow 12s ease-in-out infinite;
 }
 
 .glow1 {
@@ -272,18 +252,7 @@ section {
     background: #7a5cff;
     bottom: -150px;
     right: -150px;
-    animation-delay: 6s;
 }
-
-@keyframes floatGlow {
-    0% { transform: translateY(0px); }
-    50% { transform: translateY(40px); }
-    100% { transform: translateY(0px); }
-}
-
-/* ===============================
-   FOOTER
-=============================== */
 
 footer {
     padding: 40px;
@@ -291,122 +260,9 @@ footer {
     background: rgba(255,255,255,0.05);
 }
 
-/* ===============================
-   RESPONSIVE
-=============================== */
-
 @media(max-width:1000px) {
-
-    nav {
-        padding: 20px;
-        flex-direction: column;
-    }
-
-    section {
-        padding: 100px 20px;
-    }
-
-    .timeline {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .timeline::before {
-        display: none;
-    }
-
-    .timeline-step {
-        width: 80%;
-        margin-bottom: 60px;
-    }
-
-}
-/* ===============================
-   PREMIUM TIMELINE SECTION
-=============================== */
-
-.timeline-section {
-    position: relative;
-    overflow: hidden;
-}
-
-.timeline {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-top: 80px;
-    position: relative;
-}
-
-.timeline::before {
-    content: "";
-    position: absolute;
-    top: 35px;
-    left: 5%;
-    width: 90%;
-    height: 2px;
-    background: linear-gradient(90deg, #00f5ff, #7a5cff);
-    opacity: 0.4;
-}
-
-.timeline-step {
-    position: relative;
-    width: 22%;
-    text-align: center;
-    padding-top: 60px;
-    transition: all 0.6s cubic-bezier(.2,.8,.2,1);
-}
-
-.step-number {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    background: #00f5ff;
-    color: #000;
-    width: 70px;
-    height: 70px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-    font-size: 18px;
-    box-shadow: 0 0 25px rgba(0,245,255,0.5);
-}
-
-.timeline-step h3 {
-    margin-top: 20px;
-    font-size: 20px;
-}
-
-.timeline-step p {
-    margin-top: 15px;
-    color: #cbd5e1;
-    font-size: 15px;
-    line-height: 1.6;
-}
-
-/* Hover effect */
-
-.timeline-step:hover {
-    transform: translateY(-10px);
-}
-
-/* Responsive */
-
-@media(max-width: 1000px) {
-    .timeline {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .timeline::before {
-        display: none;
-    }
-
-    .timeline-step {
-        width: 80%;
-        margin-bottom: 60px;
-    }
+    nav { flex-direction: column; }
+    section { padding: 100px 20px; }
+    .timeline { flex-direction: column; }
+    .timeline-step { width: 100%; margin-bottom: 60px; }
 }
