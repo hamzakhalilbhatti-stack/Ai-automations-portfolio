@@ -1,29 +1,66 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>HKB Automations | Enterprise AI Systems</title>
-
-<link rel="stylesheet" href="style.css">
-<link rel="icon" type="image/png" href="favicon.png">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-
-<style>
-html { scroll-behavior: smooth; }
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HKB Automations | Enterprise AI Systems</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+html {
+    scroll-behavior: smooth;
+}
 </style>
 </head>
+<script>
+const counters = document.querySelectorAll('.counter');
+const speed = 200;
 
+const animateCounters = () => {
+  counters.forEach(counter => {
+    const updateCount = () => {
+      const target = +counter.getAttribute('data-target');
+      const count = +counter.innerText;
+      const increment = target / speed;
+
+      if (count < target) {
+        counter.innerText = Math.ceil(count + increment);
+        setTimeout(updateCount, 10);
+      } else {
+        counter.innerText = target;
+      }
+    };
+    updateCount();
+  });
+};
+
+let observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting){
+      animateCounters();
+      observer.disconnect();
+    }
+  });
+});
+
+observer.observe(document.querySelector('#projects'));
+</script>
 <body>
 
-<!-- Floating Background Glows -->
-<div class="glow glow1"></div>
-<div class="glow glow2"></div>
+<!-- INTRO -->
+<div id="intro-container">
+    <canvas id="intro-canvas"></canvas>
+</div>
 
-<!-- NAVIGATION -->
+<!-- NAV -->
 <nav>
-    <div class="logo">THE HKB AUTOMATIONS</div>
-    <div class="nav-links">
+    <div>
+        <strong>THE HKB AUTOMATIONS</strong>
+        <a href="resume.pdf" download style="margin-left:20px;color:#00f5ff;">
+            Download Resume
+        </a>
+    </div>
+    <div>
         <a href="#projects">Projects</a>
         <a href="#testimonials">Testimonials</a>
         <a href="#process">Process</a>
@@ -33,52 +70,74 @@ html { scroll-behavior: smooth; }
     </div>
 </nav>
 
-<!-- PROJECTS -->
-<section id="projects" class="reveal">
+<!-- 1️⃣ PROJECTS -->
+<section id="projects" class="projects-section">
+<section id="services" class="reveal">
+<section id="process" class="timeline-section reveal">
+<section id="projects" class="projects-section reveal">
+<section id="pricing" class="pricing-section reveal">
+<section id="booking" class="reveal">
     <h2 class="section-title">Case Studies</h2>
 
     <div class="projects-grid">
 
-        <div class="project-card case1">
-            <div class="project-overlay">
-                <h3>SaaS Lead Automation</h3>
-                <p>Built AI-driven CRM workflows for a B2B SaaS startup.</p>
-                <div class="metrics">
-                    <span class="counter" data-target="42">0</span>% Conversion<br>
-                    <span class="counter" data-target="60">0</span>% Less Manual Work
-                </div>
+    <!-- Case 1 -->
+    <div class="project-card case1">
+        <div class="project-overlay">
+            <h3>SaaS Lead Automation</h3>
+            <p>Built AI-driven CRM workflows for a B2B SaaS startup.</p>
+            <div class="metrics">
+                <span class="counter" data-target="42">0</span>% Conversion<br>
+                <span class="counter" data-target="60">0</span>% Less Manual Work
             </div>
         </div>
-
-        <div class="project-card case2">
-            <div class="project-overlay">
-                <h3>E-Commerce AI Integration</h3>
-                <p>Integrated predictive email + upsell automation system.</p>
-                <div class="metrics">
-                    +<span class="counter" data-target="31">0</span>% Revenue<br>
-                    3x Email ROI
-                </div>
-            </div>
-        </div>
-
-        <div class="project-card case3">
-            <div class="project-overlay">
-                <h3>Enterprise Workflow System</h3>
-                <p>Saved <span class="counter" data-target="120">0</span>+ Hours / Month</p>
-            </div>
-        </div>
-
     </div>
-</section>
 
-<!-- TESTIMONIALS -->
-<section id="testimonials" class="reveal">
+    <!-- Case 2 -->
+    <div class="project-card case2">
+        <div class="project-overlay">
+            <h3>E-Commerce AI Integration</h3>
+            <p>Integrated predictive email + upsell automation system.</p>
+            <div class="metrics">
+                +<span class="counter" data-target="31">0</span>% Revenue<br>
+                3x Email ROI
+            </div>
+        </div>
+    </div>
+
+    <!-- Case 3 -->
+    <div class="project-card case3">
+        <div class="project-overlay">
+            <h3>Enterprise Workflow System</h3>
+            <p>Rebuilt internal ops automation for scaling tech company.</p>
+            <div class="metrics">
+                Saved <span class="counter" data-target="120">0</span>+ Hours / Month
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</section>
+<!-- 2️⃣ TESTIMONIALS -->
+<section id="testimonials">
     <h2 class="section-title">Client Testimonials</h2>
+<section id="services" class="reveal">
+<section id="process" class="timeline-section reveal">
+<section id="projects" class="projects-section reveal">
+<section id="pricing" class="pricing-section reveal">
+<section id="booking" class="reveal">
     <div class="grid">
+        <div class="card">
+            <p>"HKB Automations completely transformed our internal operations."</p>
+            <strong>- SaaS Founder</strong>
+        </div>
+
         <div class="card">
             <p>"Enterprise-level execution with startup speed."</p>
             <strong>- Tech CEO</strong>
         </div>
+
         <div class="card">
             <p>"Automation ROI within 30 days."</p>
             <strong>- E-commerce Brand</strong>
@@ -86,8 +145,13 @@ html { scroll-behavior: smooth; }
     </div>
 </section>
 
-<!-- PROCESS -->
-<section id="process" class="reveal timeline-section">
+<!-- 3️⃣ PROCESS -->
+<section id="process" class="timeline-section">
+<section id="services" class="reveal">
+<section id="process" class="timeline-section reveal">
+<section id="projects" class="projects-section reveal">
+<section id="pricing" class="pricing-section reveal">
+<section id="booking" class="reveal">
     <h2 class="section-title">Our Process</h2>
 
     <div class="timeline">
@@ -117,45 +181,104 @@ html { scroll-behavior: smooth; }
         </div>
 
     </div>
+
 </section>
 
-<!-- PRICING -->
-<section id="pricing" class="reveal">
+<!-- 4️⃣ PRICING -->
+<section id="pricing" class="pricing-section">
+<section id="services" class="reveal">
+<section id="process" class="timeline-section reveal">
+<section id="projects" class="projects-section reveal">
+<section id="pricing" class="pricing-section reveal">
+<section id="booking" class="reveal">
     <h2 class="section-title">Pricing</h2>
 
     <div class="pricing-grid">
+
+        <!-- Starter -->
         <div class="pricing-card">
             <h3>Starter</h3>
             <div class="price">$500+</div>
-            <a href="#booking" class="btn">Get Started</a>
+            <p class="price-sub">For focused automation builds</p>
+
+            <ul>
+                <li>Workflow Automation</li>
+                <li>CRM Integration</li>
+                <li>Email & Lead Systems</li>
+                <li>1 Month Support</li>
+            </ul>
+
+            <a href="#booking" class="pricing-btn">Get Started</a>
         </div>
 
+        <!-- Growth -->
         <div class="pricing-card featured">
+            <div class="badge">Most Popular</div>
             <h3>Growth</h3>
             <div class="price">$1500+</div>
-            <a href="#booking" class="btn">Scale Now</a>
+            <p class="price-sub">For scaling startups & teams</p>
+
+            <ul>
+                <li>Multi-System Integration</li>
+                <li>AI Automation</li>
+                <li>Custom API Connections</li>
+                <li>3 Months Support</li>
+            </ul>
+
+            <a href="#booking" class="pricing-btn">Scale Now</a>
         </div>
 
+        <!-- Enterprise -->
         <div class="pricing-card enterprise">
             <h3>Enterprise</h3>
             <div class="price">Custom</div>
-            <a href="#booking" class="btn">Book Consultation</a>
+            <p class="price-sub">Full automation infrastructure</p>
+
+            <ul>
+                <li>End-to-End AI Systems</li>
+                <li>Advanced Workflow Architecture</li>
+                <li>Dedicated Support</li>
+                <li>Performance Optimization</li>
+            </ul>
+
+            <a href="#booking" class="pricing-btn">Book Consultation</a>
         </div>
+
     </div>
+
 </section>
 
-<!-- ABOUT -->
-<section id="about" class="reveal">
+<!-- 5️⃣ ABOUT -->
+<section id="about">
     <h2 class="section-title">About</h2>
-    <div class="card center-card">
-        <p>We design enterprise-grade AI automation systems for scaling companies.</p>
+<section id="services" class="reveal">
+<section id="process" class="timeline-section reveal">
+<section id="projects" class="projects-section reveal">
+<section id="pricing" class="pricing-section reveal">
+<section id="booking" class="reveal">
+    <div class="card" style="max-width:800px;margin:auto;text-align:center;">
+        <p>
+            Founded by Hamza Khalil, THE HKB AUTOMATIONS specializes in
+            designing enterprise-level AI automation systems for startups,
+            scaling companies, and corporate teams.
+        </p>
+        <br>
+        <p style="color:#00f5ff;">Mission: Automate Everything.</p>
     </div>
 </section>
 
-<!-- BOOKING -->
-<section id="booking" class="reveal">
+<!-- 6️⃣ BOOKING -->
+<section id="booking">
     <h2 class="section-title">Book a Strategy Call</h2>
-    <div class="card center-card">
+<section id="services" class="reveal">
+<section id="process" class="timeline-section reveal">
+<section id="projects" class="projects-section reveal">
+<section id="pricing" class="pricing-section reveal">
+<section id="booking" class="reveal">
+    <div class="card" style="max-width:600px;margin:auto;text-align:center;">
+        <p>Let’s build your automation infrastructure.</p>
+        <br>
+
         <a href="https://cal.com/hamza-khalil-expyr5/meeting-for-automations" target="_blank">
             <button class="btn">Book Meeting Now</button>
         </a>
@@ -163,64 +286,12 @@ html { scroll-behavior: smooth; }
 </section>
 
 <footer>
-© 2026 THE HKB AUTOMATIONS
+    © 2026 THE HKB AUTOMATIONS | Hamza Khalil
 </footer>
 
-<script>
-document.addEventListener("DOMContentLoaded", function() {
+<a href="https://linkedin.com/in/yourprofile" target="_blank" class="linkedin-float">in</a>
 
-    // Reveal
-    const reveals = document.querySelectorAll('.reveal');
-
-    const revealOnScroll = () => {
-        const windowHeight = window.innerHeight;
-        reveals.forEach(reveal => {
-            const top = reveal.getBoundingClientRect().top;
-            if (top < windowHeight - 100) {
-                reveal.classList.add('active');
-            }
-        });
-    };
-
-    window.addEventListener('scroll', revealOnScroll);
-    revealOnScroll();
-
-    // Counters
-    const counters = document.querySelectorAll('.counter');
-    let started = false;
-
-    const startCounters = () => {
-        if (started) return;
-        started = true;
-
-        counters.forEach(counter => {
-            const target = +counter.dataset.target;
-            let count = 0;
-            const speed = target / 100;
-
-            const update = () => {
-                count += speed;
-                if (count < target) {
-                    counter.innerText = Math.ceil(count);
-                    requestAnimationFrame(update);
-                } else {
-                    counter.innerText = target;
-                }
-            };
-            update();
-        });
-    };
-
-    const observer = new IntersectionObserver(entries => {
-        if (entries[0].isIntersecting) {
-            startCounters();
-        }
-    }, { threshold: 0.4 });
-
-    observer.observe(document.querySelector('#projects'));
-
-});
-</script>
+<script src="script.js"></script>
 
 </body>
 </html>
