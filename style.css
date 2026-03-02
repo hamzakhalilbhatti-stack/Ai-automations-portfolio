@@ -725,3 +725,36 @@ section {
     opacity: 1;
     transform: translateY(0);
 }
+/* ===============================
+   FLOATING GLOW BACKGROUND
+=============================== */
+
+.glow {
+    position: fixed;
+    width: 500px;
+    height: 500px;
+    border-radius: 50%;
+    filter: blur(150px);
+    z-index: -1;
+    opacity: 0.25;
+    animation: float 12s ease-in-out infinite;
+}
+
+.glow1 {
+    background: #00f5ff;
+    top: -150px;
+    left: -150px;
+}
+
+.glow2 {
+    background: #7a5cff;
+    bottom: -150px;
+    right: -150px;
+    animation-delay: 6s;
+}
+
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(40px); }
+    100% { transform: translateY(0px); }
+}
