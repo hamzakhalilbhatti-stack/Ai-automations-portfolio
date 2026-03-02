@@ -296,3 +296,10 @@ const counterObserver = new IntersectionObserver((entries) => {
 counters.forEach(counter => {
     counterObserver.observe(counter);
 });
+window.addEventListener("scroll", () => {
+    const scrollY = window.scrollY;
+
+    document.querySelectorAll(".project-card").forEach((card, i) => {
+        card.style.transform = `translateY(${scrollY * 0.02 * (i+1)}px)`;
+    });
+});
