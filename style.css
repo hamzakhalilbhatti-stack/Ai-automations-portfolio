@@ -329,3 +329,15 @@ footer {
     .timeline { flex-direction: column; }
     .timeline-step { width: 100%; margin-bottom: 60px; }
 }
+/* ================= SCROLL ANIMATIONS ================= */
+
+.hidden {
+    opacity: 0;
+    transform: translateY(60px);
+    transition: all 1s cubic-bezier(.17,.67,.83,.67);
+}
+
+.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
