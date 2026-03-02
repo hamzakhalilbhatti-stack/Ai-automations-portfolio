@@ -711,3 +711,17 @@ section {
     background-size: cover;
     background-position: center;
 }
+/* ===============================
+   SCROLL REVEAL SYSTEM
+=============================== */
+
+.reveal {
+    opacity: 0;
+    transform: translateY(60px);
+    transition: all 1s cubic-bezier(.2,.8,.2,1);
+}
+
+.reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
