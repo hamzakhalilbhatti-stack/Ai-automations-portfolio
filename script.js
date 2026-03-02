@@ -334,3 +334,27 @@ if (processSection) {
 
     processObserver.observe(processSection);
 }
+/* ================= PRICING ANIMATION ================= */
+
+const pricingSection = document.querySelector(".pricing-section");
+const pricingCards = document.querySelectorAll(".pricing-card");
+
+if (pricingSection) {
+
+    const pricingObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+
+                pricingCards.forEach((card, index) => {
+                    setTimeout(() => {
+                        card.classList.add("active");
+                    }, index * 300);
+                });
+
+                pricingObserver.unobserve(pricingSection);
+            }
+        });
+    }, { threshold: 0.3 });
+
+    pricingObserver.observe(pricingSection);
+}
