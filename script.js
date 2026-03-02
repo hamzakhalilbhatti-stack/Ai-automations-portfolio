@@ -336,12 +336,14 @@ if (processSection) {
 }
 /* ================= PRICING ANIMATION ================= */
 
-const pricingSection = document.querySelector(".pricing-section");
+/* ================= ELITE PRICING ANIMATION ================= */
+
 const pricingCards = document.querySelectorAll(".pricing-card");
+const pricingSection = document.querySelector("#pricing");
 
 if (pricingSection) {
 
-    const pricingObserver = new IntersectionObserver((entries) => {
+    const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
 
@@ -351,10 +353,10 @@ if (pricingSection) {
                     }, index * 300);
                 });
 
-                pricingObserver.unobserve(pricingSection);
+                observer.unobserve(pricingSection);
             }
         });
     }, { threshold: 0.3 });
 
-    pricingObserver.observe(pricingSection);
+    observer.observe(pricingSection);
 }
