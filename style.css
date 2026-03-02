@@ -759,3 +759,19 @@ footer {
 .modal-close:hover {
     color: #00f5ff;
 }
+.view-btn {
+    margin-top: 15px;
+    padding: 10px 25px;
+    background: linear-gradient(90deg, #00f5ff, #7a5cff);
+    color: black;
+    font-weight: bold;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.view-btn:hover {
+    transform: scale(1.05);
+    filter: brightness(1.15);
+}
