@@ -362,3 +362,13 @@ footer {
 .timeline-step.visible {
     transform: translateY(0) scale(1);
 }
+.section-title.hidden {
+    opacity: 0;
+    transform: translateY(-40px);
+}
+
+.section-title.visible {
+    opacity: 1;
+    transform: translateY(0);
+    transition: all 0.8s ease;
+}
