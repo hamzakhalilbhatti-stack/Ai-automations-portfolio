@@ -219,46 +219,100 @@ section {
 
 /* ================= TIMELINE ================= */
 
-.timeline {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 80px;
-    position: relative;
+/* ============================= */
+/* PROCESS SECTION (FIXED ELITE) */
+/* ============================= */
+
+.process {
+  position: relative;
+  padding: 120px 5%;
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  overflow: hidden;
+  text-align: center;
 }
 
-.timeline::before {
-    content: "";
-    position: absolute;
-    top: 35px;
-    left: 5%;
-    width: 90%;
-    height: 2px;
-    background: linear-gradient(90deg,#00f5ff,#7a5cff);
+.process h2 {
+  font-size: 42px;
+  margin-bottom: 80px;
+  font-weight: 700;
+  letter-spacing: 1px;
 }
 
-.timeline-step {
-    width: 22%;
-    text-align: center;
-    padding-top: 60px;
-    position: relative;
+.process-wrapper {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  max-width: 1200px;
+  margin: auto;
 }
 
-.step-number {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    background: #00f5ff;
-    color: black;
-    width: 70px;
-    height: 70px;
-    border-radius: 50%;
-    display: flex;
+/* Horizontal Line */
+.process-wrapper::before {
+  content: "";
+  position: absolute;
+  top: 45px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(to right, #00f5ff, #6a00ff);
+  z-index: 0;
+}
+
+.process-step {
+  position: relative;
+  width: 22%;
+  z-index: 2;
+}
+
+.process-circle {
+  width: 90px;
+  height: 90px;
+  margin: 0 auto 25px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #00f5ff, #6a00ff);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  font-weight: 700;
+  color: #000;
+  box-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.process-step:hover .process-circle {
+  transform: scale(1.1);
+  box-shadow: 0 0 45px rgba(106, 0, 255, 0.7);
+}
+
+.process-step h3 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.process-step p {
+  font-size: 15px;
+  opacity: 0.8;
+  line-height: 1.6;
+}
+
+/* RESPONSIVE */
+@media (max-width: 992px) {
+  .process-wrapper {
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
-    font-weight: bold;
-}
+  }
 
+  .process-wrapper::before {
+    display: none;
+  }
+
+  .process-step {
+    width: 80%;
+    margin-bottom: 60px;
+  }
+}
 /* ================= FOOTER ================= */
 
 footer {
