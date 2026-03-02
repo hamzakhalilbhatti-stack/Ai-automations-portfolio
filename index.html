@@ -45,6 +45,21 @@ let observer = new IntersectionObserver((entries) => {
 
 observer.observe(document.querySelector('#projects'));
 </script>
+    <script>
+const reveals = document.querySelectorAll('.reveal');
+
+const revealOnScroll = () => {
+  const windowHeight = window.innerHeight;
+  reveals.forEach(reveal => {
+    const elementTop = reveal.getBoundingClientRect().top;
+    if (elementTop < windowHeight - 100) {
+      reveal.classList.add('active');
+    }
+  });
+};
+
+window.addEventListener('scroll', revealOnScroll);
+</script>
 <body>
 
 <!-- INTRO -->
