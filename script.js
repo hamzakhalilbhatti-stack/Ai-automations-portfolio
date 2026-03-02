@@ -239,12 +239,22 @@ animateBackground();
    SCROLL REVEAL SYSTEM
 =========================== */
 
-const revealElements = document.querySelectorAll("section, .card");
+const revealElements = document.querySelectorAll("section, .card, .project-card, .pricing-card, .timeline-step");
 
 const revealObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
+
             entry.target.classList.add("visible");
+
+            // STAGGER CHILDREN
+            const children = entry.target.querySelectorAll(".card, .project-card, .pricing-card, .timeline-step");
+
+            children.forEach((child, index) => {
+                child.style.transitionDelay = `${index * 0.15}s`;
+                child.classList.add("visible");
+            });
+
         }
     });
 }, { threshold: 0.15 });
