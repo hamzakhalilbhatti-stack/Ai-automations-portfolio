@@ -351,3 +351,14 @@ footer {
 .pricing-card {
     animation: floatSoft 6s ease-in-out infinite;
 }
+.timeline-step {
+    transition: all 0.8s ease;
+}
+
+.timeline-step.hidden {
+    transform: translateY(80px) scale(0.9);
+}
+
+.timeline-step.visible {
+    transform: translateY(0) scale(1);
+}
