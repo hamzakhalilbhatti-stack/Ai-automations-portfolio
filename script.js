@@ -360,3 +360,16 @@ if (pricingSection) {
 
     observer.observe(pricingSection);
 }
+// Open modal and show image
+function openModal(imgSrc) {
+    const modal = document.getElementById('project-modal');
+    const modalImg = document.getElementById('modal-image');
+    modal.style.display = 'flex';
+    modalImg.src = imgSrc;
+}
+
+// Close modal
+function closeModal() {
+    const modal = document.getElementById('project-modal');
+    modal.style.display = 'none';
+}
