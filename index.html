@@ -7,7 +7,39 @@
     <title>HKB Automations | Enterprise AI Systems</title>
     <link rel="stylesheet" href="style.css">
 </head>
+<script>
+const counters = document.querySelectorAll('.counter');
+const speed = 200;
 
+const animateCounters = () => {
+  counters.forEach(counter => {
+    const updateCount = () => {
+      const target = +counter.getAttribute('data-target');
+      const count = +counter.innerText;
+      const increment = target / speed;
+
+      if (count < target) {
+        counter.innerText = Math.ceil(count + increment);
+        setTimeout(updateCount, 10);
+      } else {
+        counter.innerText = target;
+      }
+    };
+    updateCount();
+  });
+};
+
+let observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting){
+      animateCounters();
+      observer.disconnect();
+    }
+  });
+});
+
+observer.observe(document.querySelector('#projects'));
+</script>
 <body>
 
 <!-- INTRO -->
