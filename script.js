@@ -303,3 +303,34 @@ window.addEventListener("scroll", () => {
         card.style.transform = `translateY(${scrollY * 0.02 * (i+1)}px)`;
     });
 });
+/* ================= PROCESS SCROLL ANIMATION ================= */
+
+const processSection = document.querySelector(".process-section");
+const processSteps = document.querySelectorAll(".process-step");
+const processLine = document.querySelector(".process-line");
+
+if (processSection) {
+
+    const processObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+
+            if (entry.isIntersecting) {
+
+                // Animate line
+                processLine.style.width = "100%";
+
+                // Reveal circles one by one
+                processSteps.forEach((step, index) => {
+                    setTimeout(() => {
+                        step.classList.add("active");
+                    }, index * 400);
+                });
+
+                processObserver.unobserve(processSection);
+            }
+
+        });
+    }, { threshold: 0.4 });
+
+    processObserver.observe(processSection);
+}
