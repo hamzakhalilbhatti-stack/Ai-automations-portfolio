@@ -775,30 +775,3 @@ footer {
     transform: scale(1.05);
     filter: brightness(1.15);
 }
-/* ================= CARD 2 HOVER VIDEO ================= */
-
-.project-card {
-    position: relative;
-    overflow: hidden;
-}
-
-/* Hover Video */
-.project-card .hover-video {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 100%;
-    height: 100%;
-    transform: translate(-50%, -50%);
-    object-fit: cover;
-    opacity: 0;
-    transition: opacity 0.4s ease;
-    z-index: 1;
-    pointer-events: none;
-}
-
-/* Keep overlay above video */
-.project-overlay {
-    z-index: 2;
-    position: relative;
-}
