@@ -373,3 +373,27 @@ function closeModal() {
     const modal = document.getElementById('project-modal');
     modal.style.display = 'none';
 }
+/* ================= HOVER VIDEO AUTOPLAY (CARD 2 ONLY) ================= */
+
+document.querySelectorAll(".project-card").forEach(card => {
+
+    const video = card.querySelector(".hover-video");
+
+    if (!video) return;
+
+    card.addEventListener("mouseenter", async () => {
+        video.style.opacity = "1";
+        try {
+            await video.play();
+        } catch (err) {
+            console.log("Autoplay blocked:", err);
+        }
+    });
+
+    card.addEventListener("mouseleave", () => {
+        video.style.opacity = "0";
+        video.pause();
+        video.currentTime = 0;
+    });
+
+});
