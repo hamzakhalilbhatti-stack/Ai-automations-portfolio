@@ -784,14 +784,17 @@ nav{
     background:#0a1f2e;
     position:fixed;
     top:0;
+    left:0;
     width:100%;
     z-index:1000;
 }
-
-/* IMPORTANT: push content down because navbar is fixed */
-body{
-    margin:0;
-    padding-top:70px; 
+.announcement-bar{
+    margin-top:70px; /* match navbar height */
+    width:100%;
+    overflow:hidden;
+    background:#061622;
+    border-top:1px solid rgba(0,255,255,0.2);
+    border-bottom:1px solid rgba(0,255,255,0.2);
 }
 
 /* ANNOUNCEMENT BAR (SEPARATE SECTION) */
