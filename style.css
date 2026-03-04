@@ -775,7 +775,10 @@ footer {
     transform: scale(1.05);
     filter: brightness(1.15);
 }
+/* ========================= */
 /* NAVBAR */
+/* ========================= */
+
 nav{
     display:flex;
     justify-content:space-between;
@@ -788,16 +791,17 @@ nav{
     width:100%;
     z-index:1000;
 }
-.announcement-bar{
-    margin-top:70px; /* match navbar height */
-    width:100%;
-    overflow:hidden;
-    background:#061622;
-    border-top:1px solid rgba(0,255,255,0.2);
-    border-bottom:1px solid rgba(0,255,255,0.2);
+
+/* This pushes ALL content below fixed navbar */
+body{
+    margin:0;
+    padding-top:75px; /* Adjust if navbar height changes */
 }
 
-/* ANNOUNCEMENT BAR (SEPARATE SECTION) */
+/* ========================= */
+/* ANNOUNCEMENT BAR */
+/* ========================= */
+
 .announcement-bar{
     width:100%;
     overflow:hidden;
@@ -818,6 +822,7 @@ nav{
     color:#00f5ff;
 }
 
+/* Smooth infinite scroll */
 @keyframes scrollText{
     0%{ transform:translateX(0); }
     100%{ transform:translateX(-50%); }
