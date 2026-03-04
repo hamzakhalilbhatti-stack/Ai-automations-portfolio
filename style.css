@@ -795,7 +795,7 @@ nav{
 /* This pushes ALL content below fixed navbar */
 body{
     margin:0;
-    padding-top:56px; /* Adjust if navbar height changes */
+    padding-top:55px; /* Adjust if navbar height changes */
 }
 
 /* ========================= */
