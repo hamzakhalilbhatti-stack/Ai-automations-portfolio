@@ -776,60 +776,31 @@ footer {
     filter: brightness(1.15);
 }
 /* NAVBAR */
-
-.navbar{
-    position: fixed;
-    top:0;
-    width:100%;
-    z-index:1000;
-    background: rgba(10,15,25,0.8);
-    backdrop-filter: blur(12px);
-}
-
-/* main nav row */
-
-.nav-main{
+nav{
     display:flex;
     justify-content:space-between;
     align-items:center;
     padding:18px 8%;
+    background:#0a1f2e;
+    position:fixed;
+    top:0;
+    width:100%;
+    z-index:1000;
 }
 
-.nav-left{
-    display:flex;
-    align-items:center;
+/* IMPORTANT: push content down because navbar is fixed */
+body{
+    margin:0;
+    padding-top:70px; 
 }
 
-.logo{
-    font-size:18px;
-    letter-spacing:1px;
-}
-
-.resume-btn{
-    margin-left:20px;
-    color:#00f5ff;
-    text-decoration:none;
-}
-
-.nav-right a{
-    margin-left:25px;
-    text-decoration:none;
-    color:white;
-    font-size:14px;
-}
-
-.nav-right a:hover{
-    color:#00f5ff;
-}
-
-/* RUNNING LINE */
-
+/* ANNOUNCEMENT BAR (SEPARATE SECTION) */
 .announcement-bar{
     width:100%;
     overflow:hidden;
-    background:rgba(255,255,255,0.03);
-    border-top:1px solid rgba(255,255,255,0.1);
-    border-bottom:1px solid rgba(255,255,255,0.05);
+    background:#061622;
+    border-top:1px solid rgba(0,255,255,0.2);
+    border-bottom:1px solid rgba(0,255,255,0.2);
 }
 
 .announcement-track{
@@ -840,11 +811,9 @@ footer {
 
 .announcement-track span{
     padding-right:80px;
-    font-size:13px;
+    font-size:14px;
     color:#00f5ff;
 }
-
-/* animation */
 
 @keyframes scrollText{
     0%{ transform:translateX(0); }
