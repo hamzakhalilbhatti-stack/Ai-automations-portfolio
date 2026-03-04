@@ -775,3 +775,39 @@ footer {
     transform: scale(1.05);
     filter: brightness(1.15);
 }
+/* ============================ */
+/* RUNNING ANNOUNCEMENT STRIP */
+/* ============================ */
+
+.announcement-bar {
+  width: 100%;
+  background: linear-gradient(90deg, #0f2027, #203a43, #2c5364);
+  overflow: hidden;
+  border-top: 1px solid rgba(0,255,255,0.2);
+  border-bottom: 1px solid rgba(0,255,255,0.2);
+}
+
+.announcement-track {
+  display: flex;
+  width: max-content;
+  animation: scrollText 25s linear infinite;
+}
+
+.announcement-track span {
+  white-space: nowrap;
+  padding-right: 80px;
+  font-size: 14px;
+  letter-spacing: 1px;
+  color: #00f5ff;
+  font-weight: 500;
+}
+
+/* Animation */
+@keyframes scrollText {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
